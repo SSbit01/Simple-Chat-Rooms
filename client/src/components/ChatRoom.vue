@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="container">
     <header>
       <h2>{{ $route.params.name }}</h2>
       <p>Copy the URL and share it with your friends!</p>
@@ -102,15 +102,20 @@ form
 .my-msg
   background-color: RoyalBlue
 
+#container
+  display: flex
+  flex-direction: column
+  align-items: center
+
 #main_box
   font-family: Arial, Helvetica, sans-serif
-  width: 80vw
+  width: 85vw
 
 #box
   display: flex
   gap: 1em
   min-height: 20em
-  height: 48vh
+  height: 50vh
 
 #messages_box, #users
   overflow: auto
@@ -149,8 +154,6 @@ form
 @media (max-width: 800px)
   #box
     flex-direction: column
-    min-height: 30em
-    height: 58vh
   #users div
     flex-direction: row
 </style>

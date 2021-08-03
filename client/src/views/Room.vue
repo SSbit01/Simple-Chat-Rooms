@@ -64,8 +64,7 @@ export default {
 <style lang="sass" scoped>
 form
   background-color: rgb(25,25,25)
-  margin-top: auto
-  margin-bottom: 2em
+  margin: auto 1em 2em 1em
   padding: 1em
   border: 1px solid
   border-radius: .5em
@@ -73,4 +72,7 @@ form
 
 .box_input
   margin: 1em
+
+#nickname
+  max-width: 40vw
 </style>
