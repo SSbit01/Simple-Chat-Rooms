@@ -1,6 +1,6 @@
 {
   "name": "simple_chat_rooms",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "It's just a simple website that lets you create chat rooms without creating an account",
   "main": "index.js",
   "scripts": {

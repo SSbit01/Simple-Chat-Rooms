@@ -1,5 +1,5 @@
 <template>
-  <div id="box" :style="{color:color}">
+  <div id="box" :style="{color}">
     <p id="description">
       This website lets you create a chat room without creating an account. Just create a room and share the URL with your friends!<br>
       If there are no users in a room. The room is automatically deleted.<br>
@@ -13,7 +13,7 @@
       </div>
       <p>{{message}}</p>
       <transition name="fade">
-        <button id="button_room" v-show="name!=''">{{button_text}}</button>
+        <button id="button_room" v-show="name != '' && (available || !loading)" :disabled="name == '' || loading">{{button_text}}</button>
       </transition>
     </form>
   </div>
@@ -24,36 +24,43 @@
 export default {
   data() {
     return {
+      loading: false,
       available: false,
       name: ""
     }
   },
   mounted() {
-    document.title = "SCR by SSbit01"
+    document.title = "SCR by SSbit01";
     window.socket.on("roomname_available", bool => {
-      this.available = bool
-    })
+      this.available = bool;
+      this.loading = false;
+    });
   },
   methods: {
     CreateOrJoinRoom() {
-      this.$router.push({name:"Room",params:{name:this.name}})
+      this.$router.push({name: "Room", params: {name: this.name}});
     }
   },
   computed: {
     color() {
-      if (this.name != "") return this.available?'LimeGreen':'Coral'
+      if (this.name != "") {
+        return this.available ? "LimeGreen" : "Orange";
+      }
     },
     message() {
-      return this.name==""?"Type a room name":this.available?"Room name available":"Existing room"
+      return this.name == "" ? "Type a room name" : (this.available ? "Room name available" : (this.loading ? "Loading..." : "Existing room"));
     },
     button_text() {
-      return this.available?"Create Chat Room":"Join Room"
+      return this.available ? "Create Chat Room" : "Join Room";
     }
   },
   watch: {
     name(v) {
       if (v) {
-        window.socket.emit("check_roomname", v)
+        this.loading = true;
+        window.socket.emit("check_roomname", v);
+      } else {
+        this.loading = false;
       }
     }
   }

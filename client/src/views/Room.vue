@@ -7,18 +7,18 @@
         <label for="nickname">Nickname: </label>
         <input type="text" id="nickname" placeholder="Player Number 1" pattern="\s*\S.*" required v-model="nickname" :maxlength="max" v-focus>
       </div>
-      <button :disabled="nickname==''||!available">Join Room</button>
+      <button :disabled="nickname == '' || !available || loading">Join Room</button>
     </form>
 
-    <ChatRoom :nickname="nickname.slice(0,max)" v-else/>
+    <ChatRoom :nickname="nickname.slice(0, max)" v-else/>
 
   </transition>
 </template>
 
 
 <script>
-import ChatRoom from "../components/ChatRoom"
-const {socket} = window
+import ChatRoom from "../components/ChatRoom";
+const {socket} = window;
 
 export default {
   components: {ChatRoom},
@@ -27,25 +27,33 @@ export default {
       show_form: true,
       max: 20,
       available: false,
-      nickname: ""
+      nickname: "",
+      loading: false
     }
   },
   mounted() {
-    document.title = this.$route.params.name
-    socket.emit("RoomName", this.$route.params.name)
+    document.title = this.$route.params.name;
+    socket.emit("RoomName", this.$route.params.name);
     socket.on("nickname_available", bool => {
-      this.available = bool
-    })
+      this.available = bool;
+      this.loading = false;
+    });
   },
   computed: {
     color() {
-      if (this.nickname != "") return this.available?'LimeGreen':'Crimson'
+      if (this.nickname != "") {
+        return this.available ? "LimeGreen" : (this.loading ? "Orange" : "Crimson");
+      }
     }
   },
   watch: {
     nickname(v) {
       if (v) {
-        socket.emit("check_nickname", v)
+        this.loading = true;
+        socket.emit("check_nickname", v);
+      } else {
+        this.loading = false;
+        this.available = false;
       }
     }
   }

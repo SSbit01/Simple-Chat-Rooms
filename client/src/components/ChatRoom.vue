@@ -13,7 +13,7 @@
             <p v-for="(user,i) in users" class="msg" :class="{'my-msg':user===nickname}" :key="i">{{user}}</p>
           </transition-group>
         </div>
-        <transition-group name="fade" tag="div" id="messages_box">
+        <transition-group name="fade" tag="div" id="messages_box" ref="messages_box">
           <div class="msg" :class="{'my-msg':obj.nick===nickname}" v-for="(obj,i) in messages" :key="i">
             <h3>{{obj.nick}}</h3>
             <p>{{obj.msg}}</p>
@@ -42,32 +42,34 @@ export default {
     }
   },
   mounted() {
-    socket.emit("JoinRoom", this.nickname)
+    socket.emit("JoinRoom", this.nickname);
     socket.on("RoomData", obj => {
-      this.users = obj.users
-      this.messages = obj.messages
-    })
-    socket.on("NewUser", user => {
-      this.users.push(user)
-    })
-    socket.on("UserLeaves", user => {
-      this.users.splice(this.users.indexOf(user),1)
-    })
-    const messages_box = document.getElementById("messages_box")
-    socket.on("NewMsg", msg => {
-      this.messages.push(msg)
+      this.users = obj.users;
+      this.messages = obj.messages;
       this.$nextTick(() => {
-        messages_box.scrollTop = messages_box.lastElementChild.offsetTop
-      })
-    })
+        messages_box.scrollTop = obj.messages.length ? messages_box.lastElementChild.offsetTop : 0;
+      });
+    });
+    socket.on("NewUser", user => {
+      this.users.push(user);
+    });
+    socket.on("UserLeaves", user => {
+      this.users.splice(this.users.indexOf(user), 1);
+    });
+    socket.on("NewMsg", msg => {
+      this.messages.push(msg);
+      this.$nextTick(() => {
+        messages_box.scrollTop = messages_box.lastElementChild.offsetTop;
+      });
+    });
   },
   unmounted() {
-    socket.emit("LeaveRoom")
+    socket.emit("LeaveRoom");
   },
   methods: {
     SendMessage() {
-      socket.emit("message", this.message)
-      this.message = ""
+      socket.emit("message", this.message);
+      this.message = "";
     }
   }
 }
