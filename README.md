@@ -8,7 +8,7 @@ The source code consists of three [node](https://nodejs.org/) projects:
 
 1. `/client` : front-end project
 2. `/server` : back-end server
-3. `/` : the root project, which allows to start or to build the other projects at once
+3. `/` : root project, which allows to start or to build the other projects at once
 
 Each of them has its own **local packages**, which must be installed manually.
 
@@ -18,7 +18,7 @@ A `README.md` file can be found in the `/client` and `/server` paths, with more 
 
 ---
 
-Once the local packages for each projects are installed, you can run the following `npm scripts` in the root (`/`):
+Once the local packages for each project are installed, you can run the following npm scripts in root (`/`):
 
 - `dev` : starts the front-end and back-end projects in development mode.
 - `build` : compiles and bundles the front-end and back-end projects, a new folder `\dist` is created.

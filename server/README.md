@@ -4,4 +4,4 @@ This project was made with [Express](https://expressjs.com/) and [Socket.IO](htt
 
 - `dev` : starts the project with [nodemon](https://nodemon.io/)
 - `start` : starts the project
-- `build` : compilates the project, the generated file will be located in `../dist` as `index.js`
+- `build` : compiles the project, the generated file will be located in `../dist` as `index.js`
