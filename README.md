@@ -1,22 +1,25 @@
-# How to build
-Firstly, in the root directory, run this command:
-```bash
-npm install
-```
-Then, in the client folder, run these commands:
-```bash
-npm install
-npm run build
-```
-Finally, in the root directory:
-```bash
-npm start
-```
+# Simple Chat Rooms
 
-## Important
-* You need to create the `.env` file with the **PORT** variable
-* If you modify the `client` project and you want to run `npm run serve`, you need to add the **URL** parameter with the server port in the `window.socket` variable, which can be found in `\client\src\main.js`. For example: `window.socket = require("socket.io-client")("http://localhost:{server port}")`
+This is a platform created by [SSbit01](https://github.com/SSbit01) where users can create and join chat rooms without the need to create an account. It makes use of [Websockets](https://datatracker.ietf.org/doc/html/rfc6455).
 
+---
 
-### Created By [SSbit01](https://github.com/ssbit01) 
-### License [MIT](https://choosealicense.com/licenses/mit/)
+The source code consists of three [node](https://nodejs.org/) projects:
+
+1. `/client` : front-end project
+2. `/server` : back-end server
+3. `/` : the root project, which allows to start or to build the other projects at once
+
+Each of them has its own **local packages**, which must be installed manually.
+
+Also, there is a `/global` folder that can be accessed on both front-end and back-end to get some common variables and types.
+
+A `README.md` file can be found in the `/client` and `/server` paths, with more information about each project.
+
+---
+
+Once the local packages for each projects are installed, you can run the following `npm scripts` in the root (`/`):
+
+- `dev` : starts the front-end and back-end projects in development mode.
+- `build` : compiles and bundles the front-end and back-end projects, a new folder `\dist` is created.
+- `start`: starts the production code (front-end and back-end must be built).

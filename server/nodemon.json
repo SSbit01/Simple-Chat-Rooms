@@ -1,0 +1,8 @@
+{
+  "watch": [
+    "index.ts",
+    "../global"
+  ],
+  "ignore": ["*.test.ts", "*.spec.ts", "node_modules"],
+  "ext": "ts,mjs,js,json"
+}

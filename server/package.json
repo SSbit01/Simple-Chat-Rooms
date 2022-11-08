@@ -1,0 +1,31 @@
+{
+  "name": "scr-backend",
+  "version": "1.2.0",
+  "description": "Back-end",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node -r esbuild-register index.ts",
+    "build": "esbuild --define:process.env.NODE_ENV=\\\"production\\\" index.ts --platform=node --bundle --minify --outfile=../dist/index.js"
+  },
+  "keywords": [
+    "server",
+    "backend"
+  ],
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.0",
+    "socket.io": "^4.5.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.11.9",
+    "esbuild": "^0.15.13",
+    "esbuild-register": "^3.3.3",
+    "nodemon": "^2.0.20"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.7",
+    "utf-8-validate": "^5.0.10"
+  }
+}
