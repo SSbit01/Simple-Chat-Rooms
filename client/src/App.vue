@@ -17,8 +17,14 @@ if (import.meta.env.MODE != "noSocket") {
 
 
 <style lang="sass">
+html
+  height: 100%
+
 body
+  display: flex
+  flex-direction: column
   background-color: rgb(10, 15, 25)
+  height: 100%
   color: SpringGreen
   font-family: Lucida Sans Unicode, Arial
   margin: 0

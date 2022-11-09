@@ -31,8 +31,8 @@ if (import.meta.env.MODE != "noSocket") {
         if (value === roomName.value && !("error" in res)) {
           roomExists.value = res.exists
           roomJoinable.value = res.exists ? res.joinable : true
+          isLoading.value = false
         }
-        isLoading.value = false
       })
     }
   }, {
@@ -43,6 +43,7 @@ if (import.meta.env.MODE != "noSocket") {
 
 function nextStepRoom() {
   if (isValidRoomName.value) {
+    roomName.value = roomName.value.trim()
     if (import.meta.env.MODE == "noSocket") {
       router.push("/room/" + roomName.value)
     } else {
@@ -87,7 +88,8 @@ function nextStepRoom() {
       <form @submit.prevent="nextStepRoom">
         <div id="form-room-name-box">
           <label for="room-name-input">
-            <font-awesome-icon v-if="!isValidRoomName" icon="fa-solid fa-exclamation" beatFade />
+            <font-awesome-icon v-if="isLoading" icon="fa-solid fa-cog" spin />
+            <font-awesome-icon v-else-if="!isValidRoomName" icon="fa-solid fa-exclamation" beatFade />
             <font-awesome-icon v-else-if="!roomExists" icon="fa-solid fa-bolt" fade />
             <font-awesome-icon v-else-if="roomJoinable" icon="fa-solid fa-crosshairs" beatFade />
             <font-awesome-icon v-else icon="fa-solid fa-xmark" beatFade />
@@ -97,13 +99,15 @@ function nextStepRoom() {
             placeholder="Room Name"
             title="Enter a valid path"
             id="room-name-input"
-            v-model.trim="roomName"
             :pattern="roomNameAttributes.pattern.source"
             :maxlength="roomNameAttributes.maxLength"
+            :value="roomName"
+            @input="roomName = ($event.target as HTMLInputElement).value"
           />
           <p id="input-message">
             {{
-              !isValidRoomName ? "Invalid Path"
+              isLoading ? "Loading..."
+              : !isValidRoomName ? "Invalid Path"
               : !roomExists ? "Available"
               : roomJoinable ? "Existing"
               : "Not Joinable"
@@ -129,8 +133,8 @@ a
     color: LightSkyBlue
 
 #wrapper
-  $mx: .5em
-  margin: 0 $mx 4em $mx
+  $px: .5em
+  padding: 0 $px 4em $px
 
 #title
   text-align: center
@@ -185,8 +189,7 @@ main
     background: rgb(15, 25, 30)
     text-align: center
     width: 1em
-    $padding: .2em
-    padding: $padding 1.25 * $padding $padding 1.5 * $padding
+    padding: .4em .3em
     border-right: thin solid rgb(30, 40, 50)
     border-radius: $radius 0 0 $radius
   > input:last-of-type

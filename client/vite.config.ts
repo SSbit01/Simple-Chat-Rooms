@@ -9,7 +9,37 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, "../", "")
 
   return {
-    plugins: [vue(), tsconfigPaths(), VitePWA()],
+    plugins: [
+      vue(),
+      tsconfigPaths(),
+      VitePWA({
+        includeAssets: ["favicon.ico", "icon.png", "icon.svg"],
+        manifest: {
+          name: "Simple Chat Rooms by SSbit01",
+          short_name: "Simple Chat Rooms",
+          description: "It's a platform where users can create and join chat rooms without the need to create an account",
+          theme_color: "#0a0f19",
+          background_color: "#0a0f19",
+          icons: [
+            {
+              src: "/icon.svg",
+              type: "image/svg+xml",
+              sizes: "any"
+            },
+            {
+              src: "icon.png",
+              type: "image/png",
+              sizes: "256x256",
+            },
+            {
+              src: "/favicon.ico",
+              type: "image/x-icon",
+              sizes: "256x256",
+            }
+          ]
+        }
+      })
+    ],
     server: {
       proxy: {
         "/socket": {

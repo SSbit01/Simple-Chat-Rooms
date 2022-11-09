@@ -7,10 +7,10 @@
 
 <style lang="sass" scoped>
 a
+  display: inline-flex
   color: SlateGray
-  font-size: 1.5em
-  $py: .1em
-  padding: $py .4em $py .3em
+  font-size: 1.45em
+  padding: .4em
   border-radius: 50%
   transition: background .2s
   &:hover

@@ -16,7 +16,7 @@ const { roomName, nickname, showForm } = storeToRefs(useRoomStore()),
       //
       isLoading = ref(false),
       isJoinable = ref(true),
-      nicknameAvailable = ref(import.meta.env.MODE == "noSocket")
+      nicknameAvailable = ref(true)
 
 
 if (import.meta.env.MODE != "noSocket") {
@@ -25,10 +25,12 @@ if (import.meta.env.MODE != "noSocket") {
 
     socket.emit("nicknameAvailability", roomName.value, value, res => {
       isJoinable.value = res.joinable
-      if (value == nickname.value && res.joinable) {
-        nicknameAvailable.value = res.nickname
+      if (value == nickname.value) {
+        isLoading.value = false
+        if (res.joinable) {
+          nicknameAvailable.value = res.nickname
+        }
       }
-      isLoading.value = false
     })
   }, {
     immediate: true
@@ -37,6 +39,7 @@ if (import.meta.env.MODE != "noSocket") {
 
 
 function joinRoom() {
+  nickname.value = nickname.value.trim()
   if (nickname.value) {
     if (import.meta.env.MODE == "noSocket") {
       showForm.value = false
@@ -74,7 +77,8 @@ function joinRoom() {
       </h2>
       <div id="form-box-name">
         <label for="room-name-input">
-          <font-awesome-icon v-if="isJoinable && (!nickname || nicknameAvailable)" icon="fa-solid fa-user" />
+          <font-awesome-icon v-if="isLoading" icon="fa-solid fa-cog" spin />
+          <font-awesome-icon v-else-if="isJoinable && (!nickname || nicknameAvailable)" icon="fa-solid fa-user" />
           <font-awesome-icon v-else icon="fa-solid fa-xmark" beatFade />
         </label>
         <input
@@ -83,11 +87,13 @@ function joinRoom() {
           placeholder="e.g. Superman"
           id="room-name-input"
           :maxlength="nicknameAttributes.maxLength"
-          v-model.trim="nickname"
+          :value="nickname"
+          @input="nickname = ($event.target as HTMLInputElement).value"
         />
         <p id="input-message">
           {{
-            !isJoinable ? "Not Joinable"
+            isLoading ? "Loading..."
+            : !isJoinable ? "Not Joinable"
             : (!nickname || nicknameAvailable) ? "Available"
             : "Not Available"
           }}
@@ -103,8 +109,8 @@ function joinRoom() {
 <style lang="sass" scoped>
 #wrapper
   text-align: center
-  $mx: .6em
-  margin: $mx $mx 4em $mx
+  $px: .6em
+  padding: $px $px 4em $px
 
 #header-buttons
   display: flex
@@ -150,7 +156,7 @@ function joinRoom() {
   position: relative
   width: 100%
   font-size: clamp(1.25em, 7vw, 1.5em)
-  color: v-bind("(!isJoinable || (nickname && !nicknameAvailable)) && 'rgb(255, 50, 100)'")
+  color: v-bind("(!isJoinable || (!isLoading && nickname && !nicknameAvailable)) && 'rgb(255, 50, 100)'")
   $radius: 8px
   border-radius: $radius
   box-shadow: 0 0 3px
@@ -164,8 +170,7 @@ function joinRoom() {
     background: rgb(15, 25, 30)
     text-align: center
     width: 1em
-    $padding: .2em
-    padding: $padding 1.8 * $padding $padding 2 * $padding
+    padding: .4em .3em
     border-right: thin solid rgb(30, 40, 50)
     border-radius: $radius 0 0 $radius
   > input:last-of-type

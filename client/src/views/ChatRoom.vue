@@ -106,6 +106,7 @@ function sendMessage() {
 
     message.value = ""
     messageInputEl.value!.textContent = ""
+    messageInputEl.value?.focus()
   }
 }
 
@@ -231,7 +232,7 @@ main
 
 #wrapper
   display: flex
-  height: 100vh
+  height: 100%
 
 #show-room-info
   display: none
@@ -439,11 +440,10 @@ $breakpoint: 716px
       > #title-box
         display: contents
         > #toggle-info
+          display: inline-flex
           font-size: 1.5em
-          vertical-align: -.4em
           color: SlateGray
-          $px: .4em
-          padding: .1em $px 0 $px
+          padding: .35em .4em
           border-radius: 50%
         > #room-name
           text-align: center

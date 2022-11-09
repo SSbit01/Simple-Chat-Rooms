@@ -18,7 +18,7 @@ function shareRoom() {
 
 <style lang="sass" scoped>
 button
-  font-size: 1.2em
+  font-size: 1.25em
   padding: .5em
   border-radius: 50%
   border: none

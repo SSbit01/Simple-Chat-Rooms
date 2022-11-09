@@ -26,8 +26,7 @@
   text-align: center
   font-size: clamp(1.5em, 8.8vw, 2em)
   margin: 5rem 0
-  > h
-    &1, &2
+  > h1, h2
       margin-top: 0
       margin-bottom: 0
   > h1
