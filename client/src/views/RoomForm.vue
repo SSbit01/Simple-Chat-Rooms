@@ -99,7 +99,7 @@ function joinRoom() {
           }}
         </p>
       </div>
-      <MySubmitButton :valid="isJoinable && (!nickname || nicknameAvailable)" :disabled="isLoading || !nickname">Join <font-awesome-icon icon="fa-solid fa-right-to-bracket" /></MySubmitButton>
+      <MySubmitButton :valid="isJoinable && (isLoading || !nickname || nicknameAvailable)" :disabled="isLoading || !nickname">Join <font-awesome-icon icon="fa-solid fa-right-to-bracket" /></MySubmitButton>
     </form>
   </div>
 </template>
