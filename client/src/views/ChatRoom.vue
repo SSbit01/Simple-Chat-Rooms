@@ -158,7 +158,7 @@ onUnmounted(() => {
         </h1>
       </div>
       <section id="users">
-        <p><em>{{ mates.size + 1 }}</em> participants</p>
+        <p><em>{{ mates.size + 1 }}</em> {{ mates.size ? "participants" : "participant" }}</p>
         <ul class="fa-ul">
           <li title="You">
             <span class="fa-li"><font-awesome-icon icon="fa-solid fa-user" beatFade /></span>{{ nickname }}
