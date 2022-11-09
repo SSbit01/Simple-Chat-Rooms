@@ -17,7 +17,7 @@ const router = useRouter(),
       //
       isLoading = ref(false),
       roomExists = ref(false),
-      roomJoinable = ref(import.meta.env.MODE == "noSocket"),
+      roomJoinable = ref(true),
       //
       isValidRoomName = computed(() => roomNameAttributes.pattern.test(roomName.value))
 
@@ -34,6 +34,8 @@ if (import.meta.env.MODE != "noSocket") {
           isLoading.value = false
         }
       })
+    } else {
+      isLoading.value = false
     }
   }, {
     immediate: true
@@ -174,7 +176,7 @@ main
 #form-room-name-box
   display: flex
   position: relative
-  font-size: clamp(1.25em, 4.9vw, 1.5em)
+  font-size: clamp(1.25em, 7vw, 1.5em)
   max-width: 20em
   color: v-bind("roomName && !isValidRoomName ? 'rgb(255, 50, 100)' : roomExists && (roomJoinable ? 'orange' : 'rgb(255, 50, 100)')")
   $radius: 8px
@@ -212,7 +214,7 @@ main
 
 #input-message
   position: absolute
-  top: -1.75em
+  top: -1.6em
   right: 1em
   font-size: .6em
   background-color: rgb(5, 10, 20)

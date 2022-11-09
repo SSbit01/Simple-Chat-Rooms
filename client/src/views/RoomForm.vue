@@ -193,7 +193,7 @@ function joinRoom() {
 
 #input-message
   position: absolute
-  top: -1.75em
+  top: -1.65em
   right: 1em
   font-size: .5em
   background-color: rgb(5, 10, 20)
