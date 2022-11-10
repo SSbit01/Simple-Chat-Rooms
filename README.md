@@ -26,6 +26,6 @@ Once the local packages for each project are installed, you can run the followin
 - `dev`
 : starts the front-end and back-end projects in development mode.
 - `build`
-: compiles and bundles the front-end and back-end projects, a new folder `\dist` is created.
+: compiles and bundles the front-end and back-end projects, a new folder `/dist` is created.
 - `start`
 : starts the production code (front-end and back-end must be built).
