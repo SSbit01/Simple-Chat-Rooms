@@ -1,6 +1,6 @@
 {
   "name": "simple-chat-rooms",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "It's a platform where users can create and join chat rooms without the need to create an account",
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",

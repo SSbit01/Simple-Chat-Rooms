@@ -27,7 +27,7 @@ export interface ClientToServerEvents {
     joinable: boolean
   }) => void): void
 
-  nicknameAvailability(room: string, nickname: string, callback: (response: {
+  nicknameAvailability(room: string, nickname: string, callback: (response: ErrorCallback | {
     joinable: true
     nickname: boolean
   } | {

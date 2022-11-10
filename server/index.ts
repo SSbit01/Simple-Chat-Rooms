@@ -80,7 +80,21 @@ io.on("connection", socket => {
 
 
   socket.on("nicknameAvailability", async(room, nickname, callback) => {
-    const clients = await io.in(room.trim()).fetchSockets(),
+    room = room.trim()
+
+    if (!room) {
+      return callback({
+        error: "Room name is required"
+      })
+    }
+
+    if (room.length > roomNameAttributes.maxLength) {
+      return callback({
+        error: "Invalid room name"
+      })
+    }
+
+    const clients = await io.in(room).fetchSockets(),
           joinable = clients.length < roomSizeLimit
     
     nickname = nickname.trim()
@@ -96,13 +110,6 @@ io.on("connection", socket => {
 
   socket.on("joinChatRoom", async(room, nickname, callback) => {
     room = room.trim()
-    nickname = nickname.trim()
-
-    if (!nickname) {
-      return callback({
-        error: "Nickname is required"
-      })
-    }
 
     if (!room) {
       return callback({
@@ -113,6 +120,14 @@ io.on("connection", socket => {
     if (room.length > roomNameAttributes.maxLength) {
       return callback({
         error: "Invalid room name"
+      })
+    }
+
+    nickname = nickname.trim()
+
+    if (!nickname) {
+      return callback({
+        error: "Nickname is required"
       })
     }
 
@@ -147,6 +162,20 @@ io.on("connection", socket => {
 
 
   socket.on("message", (room, msg, callback) => {
+    room = room.trim()
+    
+    if (!room) {
+      return callback({
+        error: "Room name is required"
+      })
+    }
+
+    if (room.length > roomNameAttributes.maxLength) {
+      return callback({
+        error: "Invalid room name"
+      })
+    }
+
     msg = msg.trim()
 
     if (!msg) {

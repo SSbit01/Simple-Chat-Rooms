@@ -364,6 +364,7 @@ main
   &:empty
     overflow-x: hidden
     &::before
+      cursor: text
       white-space: nowrap
       content: attr(placeholder)
       color: LightSlateGray
@@ -391,7 +392,6 @@ main
 #send-message
   font-size: 1em
   background: transparent
-  box-sizing: border-box
   padding: .5em
   border: none
   border-radius: 50%

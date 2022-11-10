@@ -19,13 +19,13 @@ export default createRouter({
       path: "/room",
       children: [
         {
-          path: `:roomName(.{${roomNameAttributes.maxLength + 1},})`,
-          redirect: "/"
-        },
-        {
           path: ":roomName",
           component: RoomPage,
           beforeEnter(to) {
+            if ((Array.isArray(to.params.roomName) ? to.params.roomName[0] : to.params.roomName).trim().length > roomNameAttributes.maxLength) {
+              return "/"
+            }
+
             if (((Array.isArray(to.query.name) ? to.query.name[0] : to.query.name)?.trim() || "").length > nicknameAttributes.maxLength) {
               delete to.query.name
               return to

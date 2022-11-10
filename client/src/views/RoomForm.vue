@@ -23,11 +23,16 @@ if (import.meta.env.MODE != "noSocket") {
     isLoading.value = true
 
     socket.emit("nicknameAvailability", roomName.value, value, res => {
-      isJoinable.value = res.joinable
-      if (value == nicknameTrimmed.value) {
+      if ("error" in res) {
+        alert(res.error)
         isLoading.value = false
-        if (res.joinable) {
-          nicknameAvailable.value = res.nickname
+      } else {
+        isJoinable.value = res.joinable
+        if (value == nicknameTrimmed.value) {
+          isLoading.value = false
+          if (res.joinable) {
+            nicknameAvailable.value = res.nickname
+          }
         }
       }
     })
@@ -59,10 +64,14 @@ function joinRoom() {
       isLoading.value = true
 
       socket.emit("nicknameAvailability", roomName.value, nickname.value, res => {
-        isJoinable.value = res.joinable
-        nicknameAvailable.value = res.joinable && res.nickname
         isLoading.value = false
-        showForm.value = !nicknameAvailable.value
+        if ("error" in res) {
+          alert(res.error)
+        } else {
+          isJoinable.value = res.joinable
+          nicknameAvailable.value = res.joinable && res.nickname
+          showForm.value = !nicknameAvailable.value
+        }
       })
     }
   }
