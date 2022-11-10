@@ -62,6 +62,12 @@ io.on("connection", socket => {
       })
     }
 
+    if (room.length > roomNameAttributes.maxLength) {
+      return callback({
+        error: "Invalid room name"
+      })
+    }
+
     const roomData = io.sockets.adapter.rooms.get(room)
 
     callback(roomData ? {
@@ -74,14 +80,14 @@ io.on("connection", socket => {
 
 
   socket.on("nicknameAvailability", async(room, nickname, callback) => {
-    nickname = nickname.trim()
-    
     const clients = await io.in(room.trim()).fetchSockets(),
           joinable = clients.length < roomSizeLimit
-  
+    
+    nickname = nickname.trim()
+    
     callback(joinable ? {
       joinable: true,
-      nickname: Boolean(nickname) && !clients.some(({data}) => data.nickname == nickname)
+      nickname: nickname.length > 0 && nickname.length <= nicknameAttributes.maxLength && !clients.some(({data}) => data.nickname == nickname)
     } : {
       joinable: false
     })

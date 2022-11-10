@@ -14,21 +14,22 @@ import MySubmitButton from "@/components/MySubmitButton.vue"
 const router = useRouter(),
       //
       { roomName } = storeToRefs(useRoomStore()),
+      roomNameTrimmed = computed(() => roomName.value.trim()),
       //
       isLoading = ref(false),
       roomExists = ref(false),
       roomJoinable = ref(true),
       //
-      isValidRoomName = computed(() => roomNameAttributes.pattern.test(roomName.value))
+      isValidRoomName = computed(() => roomNameAttributes.pattern.test(roomNameTrimmed.value) && roomNameTrimmed.value.length <= roomNameAttributes.maxLength)
 
 
 if (import.meta.env.MODE != "noSocket") {
-  watch(roomName, value => {
+  watch(roomNameTrimmed, value => {
     if (isValidRoomName.value) {
       isLoading.value = true
 
       socket.emit("roomAvailability", value, res => {
-        if (value === roomName.value && !("error" in res)) {
+        if (value === roomNameTrimmed.value && !("error" in res)) {
           roomExists.value = res.exists
           roomJoinable.value = res.exists ? res.joinable : true
           isLoading.value = false
@@ -36,6 +37,8 @@ if (import.meta.env.MODE != "noSocket") {
       })
     } else {
       isLoading.value = false
+      roomExists.value = false
+      roomJoinable.value = true
     }
   }, {
     immediate: true
@@ -43,9 +46,22 @@ if (import.meta.env.MODE != "noSocket") {
 }
 
 
+function roomNameOnInput(event: Event) {
+  const el = event.target as HTMLInputElement
+  el.value = el.value.substring(0, roomNameAttributes.maxLength)
+
+  if (!el.value.trim()) {
+    el.value = ""
+  }
+
+  roomName.value = el.value
+}
+
+
 function nextStepRoom() {
+  roomName.value = roomNameTrimmed.value
+
   if (isValidRoomName.value) {
-    roomName.value = roomName.value.trim()
     if (import.meta.env.MODE == "noSocket") {
       router.push("/room/" + roomName.value)
     } else {
@@ -91,7 +107,7 @@ function nextStepRoom() {
         <div id="form-room-name-box">
           <label for="room-name-input">
             <font-awesome-icon v-if="isLoading" icon="fa-solid fa-cog" spin />
-            <font-awesome-icon v-else-if="!isValidRoomName" icon="fa-solid fa-exclamation" beatFade />
+            <font-awesome-icon v-else-if="roomName && !isValidRoomName" icon="fa-solid fa-exclamation" beatFade />
             <font-awesome-icon v-else-if="!roomExists" icon="fa-solid fa-bolt" fade />
             <font-awesome-icon v-else-if="roomJoinable" icon="fa-solid fa-crosshairs" beatFade />
             <font-awesome-icon v-else icon="fa-solid fa-xmark" beatFade />
@@ -104,19 +120,19 @@ function nextStepRoom() {
             :pattern="roomNameAttributes.pattern.source"
             :maxlength="roomNameAttributes.maxLength"
             :value="roomName"
-            @input="roomName = ($event.target as HTMLInputElement).value"
+            @input="roomNameOnInput"
           />
           <p id="input-message">
             {{
               isLoading ? "Loading..."
-              : !isValidRoomName ? "Invalid Path"
+              : roomName && !isValidRoomName ? "Invalid Path"
               : !roomExists ? "Available"
               : roomJoinable ? "Existing"
               : "Not Joinable"
             }}
           </p>
         </div>
-        <MySubmitButton :valid="roomJoinable || !roomName" :disabled="isLoading || !isValidRoomName">Next <font-awesome-icon icon="fa-solid fa-right-to-bracket" /></MySubmitButton>
+        <MySubmitButton :valid="roomJoinable" :disabled="isLoading || !isValidRoomName">Next <font-awesome-icon icon="fa-solid fa-right-to-bracket" /></MySubmitButton>
       </form>
     </main>
   </div>

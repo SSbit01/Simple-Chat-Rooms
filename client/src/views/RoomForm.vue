@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch } from "vue"
+import { ref, computed, watch } from "vue"
 import { storeToRefs } from "pinia"
 
 import useRoomStore from "@/store/room"
@@ -13,6 +13,7 @@ import MySubmitButton from "@/components/MySubmitButton.vue"
 
 
 const { roomName, nickname, showForm } = storeToRefs(useRoomStore()),
+      nicknameTrimmed = computed(() => nickname.value.trim()),
       //
       isLoading = ref(false),
       isJoinable = ref(true),
@@ -20,12 +21,12 @@ const { roomName, nickname, showForm } = storeToRefs(useRoomStore()),
 
 
 if (import.meta.env.MODE != "noSocket") {
-  watch(nickname, value => {
+  watch(nicknameTrimmed, value => {
     isLoading.value = true
 
     socket.emit("nicknameAvailability", roomName.value, value, res => {
       isJoinable.value = res.joinable
-      if (value == nickname.value) {
+      if (value == nicknameTrimmed.value) {
         isLoading.value = false
         if (res.joinable) {
           nicknameAvailable.value = res.nickname
@@ -38,8 +39,21 @@ if (import.meta.env.MODE != "noSocket") {
 }
 
 
+function nicknameOnInput(event: Event) {
+  const el = event.target as HTMLInputElement
+  el.value = el.value.substring(0, nicknameAttributes.maxLength)
+
+  if (!el.value.trim()) {
+    el.value = ""
+  }
+
+  nickname.value = el.value
+}
+
+
 function joinRoom() {
-  nickname.value = nickname.value.trim()
+  nickname.value = nicknameTrimmed.value
+  
   if (nickname.value) {
     if (import.meta.env.MODE == "noSocket") {
       showForm.value = false
@@ -88,7 +102,7 @@ function joinRoom() {
           id="room-name-input"
           :maxlength="nicknameAttributes.maxLength"
           :value="nickname"
-          @input="nickname = ($event.target as HTMLInputElement).value"
+          @input="nicknameOnInput"
         />
         <p id="input-message">
           {{
