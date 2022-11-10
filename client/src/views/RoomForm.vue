@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from "vue"
-import { storeToRefs } from "pinia"
 
-import useRoomStore from "@/store/room"
+import { roomName, nickname, showForm } from "@/store"
 import socket from "@/socket"
 
 import { nicknameAttributes } from "@global/roomAttributes"
@@ -12,8 +11,7 @@ import ShareButton from "@/components/ShareLinkButton.vue"
 import MySubmitButton from "@/components/MySubmitButton.vue"
 
 
-const { roomName, nickname, showForm } = storeToRefs(useRoomStore()),
-      nicknameTrimmed = computed(() => nickname.value.trim()),
+const nicknameTrimmed = computed(() => nickname.value.trim()),
       //
       isLoading = ref(false),
       isJoinable = ref(true),

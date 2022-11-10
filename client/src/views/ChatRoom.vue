@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import { ref, reactive, computed, watch, nextTick, onUnmounted } from "vue"
 import { useRouter } from "vue-router"
-import { storeToRefs } from "pinia"
 import DOMPurify from "dompurify"
 
 import socket from "@/socket"
 
-import useRoomStore from "@/store/room"
+import { roomName, nickname } from "@/store"
 
 import GoBackButton from "@/components/GoHomeButton.vue"
 import ShareButton from "@/components/ShareLinkButton.vue"
@@ -21,9 +20,7 @@ DOMPurify.setConfig({
 })
 
 
-const { roomName, nickname } = storeToRefs(useRoomStore()),
-      router = useRouter(),
-      //
+const router = useRouter(),
       mates = reactive(new Set<string>())
 
 socket.emit("joinChatRoom", roomName.value, nickname.value, res => {

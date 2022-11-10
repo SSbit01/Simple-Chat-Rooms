@@ -1,6 +1,6 @@
 {
   "name": "scr-frontend",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Front-end",
   "scripts": {
     "dev:noSocket": "vite --mode noSocket",
@@ -21,7 +21,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^3.0.2",
     "dompurify": "^2.4.0",
-    "pinia": "^2.0.23",
     "sass": "^1.56.0",
     "socket.io-client": "^4.5.3",
     "vue": "^3.2.41",

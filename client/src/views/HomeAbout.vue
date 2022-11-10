@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from "vue"
 import { useRouter } from "vue-router"
-import { storeToRefs } from "pinia"
 
-import useRoomStore from "@/store/room"
+import { roomName } from "@/store"
 import socket from "@/socket"
 
 import { roomNameAttributes, roomSizeLimit } from "@global/roomAttributes"
@@ -13,7 +12,6 @@ import MySubmitButton from "@/components/MySubmitButton.vue"
 
 const router = useRouter(),
       //
-      { roomName } = storeToRefs(useRoomStore()),
       roomNameTrimmed = computed(() => roomName.value.trim()),
       //
       isLoading = ref(false),
