@@ -224,11 +224,11 @@ main
   flex: 1
   display: flex
   flex-direction: column
-  min-height: 20em
 
 
 #wrapper
   display: flex
+  min-height: 20em
   height: 100%
 
 #show-room-info
@@ -411,7 +411,7 @@ main
     color: LightSlateGray
 
 
-$breakpoint: 716px
+$breakpoint: 717px
 
 
 @media (max-width: $breakpoint)
