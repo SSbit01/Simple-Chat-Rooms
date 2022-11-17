@@ -426,7 +426,7 @@ $breakpoint: 716px
       overflow: auto
       background-color: rgb(15, 25, 35)
       $px: .6em
-      padding: .5em $px 2em $px
+      padding: .6em $px 2em $px
       animation: show-info-frames ease-out .2s
       @keyframes show-info-frames
         from
@@ -451,7 +451,7 @@ $breakpoint: 716px
       display: flex
       align-items: center
       position: sticky
-      font-size: clamp(.8em, 2.35vw, 1em)
+      font-size: clamp(.85em, 2.35vw, 1em)
       background-color: rgb(20, 30, 40)
       border-bottom: thin solid rgb(30, 50, 50)
       animation: header-frames ease-out .2s
@@ -494,10 +494,12 @@ $breakpoint: 716px
 
 @media (min-width: $breakpoint + 1)
   #header
+    overflow: auto
     background-color: rgb(15, 25, 35)
     width: 40%
     max-width: 40em
-    padding: .6em
+    $px: .6em
+    padding: .6em $px 2em $px
     border-right: thin solid rgb(25, 50, 50)
   
   #toggle-info
