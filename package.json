@@ -14,7 +14,7 @@
   "author": "SSbit01",
   "repository": {
     "type": "git",
-    "directory": "https://github.com/SSbit01/Simple-Chat-Rooms.git"
+    "url": "https://github.com/SSbit01/Simple-Chat-Rooms.git"
   },
   "license": "GPL-3.0",
   "dependencies": {
