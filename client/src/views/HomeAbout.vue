@@ -194,11 +194,11 @@ main
   font-size clamp(1.25em, 7vw, 1.5em)
   max-width 20em
   color v-bind("roomStore.name && !isValidRoomName ? 'rgb(255, 50, 100)' : roomExists && (roomJoinable ? 'orange' : 'rgb(255, 50, 100)')")
-  box-shadow 0 0 3px
+  box-shadow 0 0 2px
   margin 1em auto
   transition color .15s, box-shadow .2s
   &:focus-within
-    box-shadow 0 0 8px
+    box-shadow 0 0 6px
   > label:first-of-type
     user-select none
     background rgb(15, 25, 30)
@@ -224,13 +224,14 @@ main
 
 #input-message
   position absolute
-  top -1.6em
+  top -1.5em
   right 1em
   font-size .6em
   background-color rgb(5, 10, 20)
   padding 0 .4em
-  border thin solid
-  border-bottom none
+  box-shadow 0 -2px 2px
+  $br = 4px
+  border-radius $br $br 0 0 
   margin 0
   transition-property opacity, visibility
   transition-duration .15s

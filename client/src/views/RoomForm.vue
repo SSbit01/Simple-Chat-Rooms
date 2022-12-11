@@ -182,12 +182,12 @@ function joinRoom() {
   width 100%
   font-size clamp(1.25em, 7vw, 1.5em)
   color v-bind("(!isJoinable || (!isLoading && roomStore.nick && !nicknameAvailable)) && 'rgb(255, 50, 100)'")
-  box-shadow 0 0 3px
+  box-shadow 0 0 2px
   margin-top .5em
   margin-bottom .2em
   transition color .15s, box-shadow .2s
   &:focus-within
-    box-shadow 0 0 8px
+    box-shadow 0 0 6px
   > label:first-child
     user-select none
     background rgb(15, 25, 30)
@@ -213,13 +213,12 @@ function joinRoom() {
 
 #input-message
   position absolute
-  top -1.65em
+  top -1.5em
   right 1em
   font-size .5em
   background-color rgb(5, 10, 20)
   padding 0 .4em
-  border thin solid
-  border-bottom none
+  box-shadow 0 -2px 2px
   $br = 4px
   border-radius $br $br 0 0
   margin 0
