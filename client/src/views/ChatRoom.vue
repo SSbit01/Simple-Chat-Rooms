@@ -5,7 +5,7 @@ import DOMPurify from "dompurify"
 
 import socket from "@/socket"
 
-import { roomName, nickname } from "@/store"
+import useRoomStore from "@/stores/room"
 
 import GoBackButton from "@/components/GoHomeButton.vue"
 import ShareButton from "@/components/ShareLinkButton.vue"
@@ -20,10 +20,12 @@ DOMPurify.setConfig({
 })
 
 
-const router = useRouter(),
+const roomStore = useRoomStore(),
+      //
+      router = useRouter(),
       mates = reactive(new Set<string>())
 
-socket.emit("joinChatRoom", roomName.value, nickname.value, res => {
+socket.emit("joinChatRoom", roomStore.name, roomStore.nick, res => {
   if ("error" in res) {
     console.error(res.error)
     alert(res.error)
@@ -49,7 +51,7 @@ watch(events, () => {
   nextTick(() => {
     const el = document.getElementById("events")
 
-    if (el && (events[events.length - 1].by === nickname.value || el.scrollHeight - el.clientHeight - el.scrollTop < 250)) {  // Check if the last event was caused by the user and if that's not the case only scroll down when the scroll is close to bottom
+    if (el && (events[events.length - 1].by === roomStore.nick || el.scrollHeight - el.clientHeight - el.scrollTop < 250)) {  // Check if the last event was caused by the user and if that's not the case only scroll down when the scroll is close to bottom
       el.scrollTop = el.scrollHeight
     }
   })
@@ -91,10 +93,10 @@ function messageOnPaste(event: ClipboardEvent) {
 
 function sendMessage() {
   if (!disabledMessageForm.value) {
-    events.push({ by: nickname.value, value: message.value, date: new Date() })
+    events.push({ by: roomStore.nick, value: message.value, date: new Date() })
 
     if (mates.size) {
-      socket.emit("message", roomName.value, message.value, res => {
+      socket.emit("message", roomStore.name, message.value, res => {
         if (res.error) {
           alert(res.error)
         }
@@ -134,7 +136,7 @@ socket.on("userLeaves", user => {
 
 
 onUnmounted(() => {
-  socket.emit("leaveChatRoom", roomName.value)
+  socket.emit("leaveChatRoom", roomStore.name)
 })
 </script>
 
@@ -151,14 +153,14 @@ onUnmounted(() => {
           <font-awesome-icon icon="fa-solid fa-arrow-left" />
         </label>
         <h1 id="room-name" title="Room Info">
-          <font-awesome-icon icon="fa-solid fa-bolt" fade /> {{ roomName }}
+          <font-awesome-icon icon="fa-solid fa-bolt" fade /> {{ roomStore.name }}
         </h1>
       </div>
       <section id="users">
         <p><em>{{ mates.size + 1 }}</em> {{ mates.size ? "participants" : "participant" }}</p>
         <ul class="fa-ul">
           <li title="You">
-            <span class="fa-li"><font-awesome-icon icon="fa-solid fa-user" beatFade /></span>{{ nickname }}
+            <span class="fa-li"><font-awesome-icon icon="fa-solid fa-user" beatFade /></span>{{ roomStore.nick }}
           </li>
           <TransitionGroup name="event">
             <li v-for="mate in mates" :key="mate">
@@ -173,11 +175,11 @@ onUnmounted(() => {
         <article v-for="{ by, value, date }, i in events" :key="i" :class="{
           event: !by,
           message: by,
-          'my-message': by === nickname
+          'my-message': by === roomStore.nick
         }" :style="{
           marginTop: by && events[i - 1]?.by == by ? '.25em' : '1em'
         }">
-          <h4 v-if="by && ![nickname, events[i - 1]?.by].includes(by)" :title="by">
+          <h4 v-if="by && ![roomStore.nick, events[i - 1]?.by].includes(by)" :title="by">
             <font-awesome-icon icon="fa-solid fa-circle-user" />{{ by }}
           </h4>
           <div>
@@ -209,309 +211,311 @@ onUnmounted(() => {
 
 
 
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .event-move, .event-enter-active, .event-leave-active
-  transition-duration: .15s
+  transition-duration .15s
 .event-leave-active
-  position: absolute
+  position absolute
 .event-enter-from, .event-leave-to
-  scale: .6
-  opacity: 0
+  scale .6
+  opacity 0
 
 
 main
-  overflow: auto
-  flex: 1
-  display: flex
-  flex-direction: column
+  overflow auto
+  flex 1
+  display flex
+  flex-direction column
 
 
 #wrapper
-  display: flex
-  min-height: 20em
-  height: 100%
+  display flex
+  min-height 20em
+  height 100%
 
 #show-room-info
-  display: none
+  display none
 
 #go-home-button
-  order: 1
+  order 1
 
 #room-name
-  position: relative
-  user-select: none
-  overflow-wrap: anywhere
-  font-size: 1.5em
-  font-weight: bold
-  line-height: 1.2
-  margin: 0
+  position relative
+  user-select none
+  overflow-wrap anywhere
+  font-size 1.5em
+  font-weight bold
+  line-height 1.2
+  margin 0
   > svg
-    color: MediumAquaMarine
+    color mediumaquamarine
 
 #share-room-button
-  order: 3
-  float: right
+  order 3
+  float right
 
 #users
-  overflow-wrap: anywhere
-  line-height: 1
-  white-space: pre-wrap
-  margin-top: 1.8em
+  overflow-wrap anywhere
+  line-height 1
+  white-space pre-wrap
+  margin-top 1.8em
   > p:first-child
-    color: CadetBlue
-    font-size: .8em
-    margin-bottom: .25em
+    color cadetblue
+    font-size .8em
+    margin-bottom .25em
   > ul
-    position: relative
-    font-size: 1.2em
-    border-top: thin solid DarkSlateGray
-    padding-left: 2em
-    padding-top: .8em
-    margin: 0
+    position relative
+    font-size 1.2em
+    border-top thin solid darkslategray
+    padding-left 2em
+    padding-top .8em
+    margin 0
     > li
       > .fa-li
-        font-size: 1em
+        font-size 1em
       &:first-child
-        color: MediumAquaMarine
+        color mediumaquamarine
         > .fa-li
-          color: LightSeaGreen
+          color lightseagreen
       &:not(:first-child)
-        color: CadetBlue
+        color cadetblue
         > .fa-li
-          color: rgb(0, 120, 120)
+          color rgb(0, 120, 120)
       &:not(:last-child)
-        margin-bottom: .6em
+        margin-bottom .6em
   
 #events
-  overflow-y: auto
-  overflow-x: hidden
-  scroll-behavior: smooth
-  -webkit-overflow-scrolling: touch
-  display: grid
-  font-family: Arial
-  box-sizing: border-box
-  $px: max(min(calc((100% - 100em) / 2), 13.5%), .5em)
-  padding: 0 $px 3em $px
+  overflow-y auto
+  overflow-x hidden
+  scroll-behavior smooth
+  -webkit-overflow-scrolling touch
+  display grid
+  font-family Arial, sans-serif
+  box-sizing border-box
+  $px = @css { max(min(calc((100% - 100em) / 2), 13.5%), .6em) }
+  padding 0 $px 3em $px
   > article
-    white-space: pre-wrap
-    overflow-wrap: anywhere
-    min-width: 0
-    padding: .4em
-    border-radius: 4px
+    white-space pre-wrap
+    overflow-wrap anywhere
+    min-width 0
+    padding .4em
+    border-radius 4px
     > h4
-      overflow: hidden
-      color: DeepSkyBlue
-      white-space: pre
-      text-overflow: ellipsis
-      margin-top: .1em
-      margin-bottom: .4em
+      overflow hidden
+      color deepskyblue
+      white-space pre
+      text-overflow ellipsis
+      margin-top .1em
+      margin-bottom .4em
       > svg
-        color: LightSkyBlue
-        margin-right: .4em
+        color lightskyblue
+        margin-right .4em
     > div
-      display: flex
-      flex-wrap: wrap
-      align-items: flex-end
-      gap: .3em .5em
-      > .event-value > :deep(*)  // :deep(*) to select v-html elements
-        max-width: 100% !important
+      display flex
+      flex-wrap wrap
+      align-items flex-end
+      gap .3em .5em
+      > .event-value
+        :deep(*)  // :deep(*) to select v-html elements
+          white-space pre-wrap !important
+          max-width 100% !important
       > time
-        font-size: .7em
-        color: rgb(140, 160, 190)
-        margin: 0 -.2em -.3em auto
+        font-size .7em
+        color rgb(140, 160, 190)
+        margin 0 -.2em -.3em auto
     &.event
-      text-align: center
-      color: LightSlateGray
-      background: rgb(20, 25, 35)
-      box-shadow: 0 0 3px
-      margin: 0 auto
+      text-align center
+      color lightslategray
+      background rgb(20, 25, 35)
+      box-shadow 0 0 3px
+      margin 0 auto
     &.message
-      color: HoneyDew
-      max-width: 85%
+      color HoneyDew
+      max-width 84%
       &.my-message
-        transform-origin: top right
-        background: rgb(40, 80, 125)
-        margin-left: auto
+        transform-origin top right
+        background rgb(40, 80, 125)
+        margin-left auto
       &:not(.my-message)
-        transform-origin: top left
-        background: rgb(30, 40, 60)
-        margin-right: auto
+        transform-origin top left
+        background rgb(30, 40, 60)
+        margin-right auto
 
 #type-box
-  display: flex
-  align-items: flex-end
-  position: relative
-  color: AliceBlue
-  background-color: rgb(0, 10, 20)
-  caret-color: LightSeaGreen
-  box-shadow: 0 0 4px DarkSlateGray
-  margin-top: auto
-  transition: box-shadow .15s
+  display flex
+  align-items flex-end
+  position relative
+  color aliceblue
+  background-color rgb(0, 10, 20)
+  caret-color lightseagreen
+  box-shadow 0 0 4px darkslategray
+  margin-top auto
+  transition box-shadow .15s
   &:focus-within
-    box-shadow: 0 0 2px 2px Teal
+    box-shadow 0 0 2px 2px teal
 
 #type-message
-  overflow-y: auto
-  white-space: pre-wrap
-  font-size: inherit
-  font-family: Arial
-  width: 100%
-  max-height: 7.5em
-  box-sizing: border-box
-  padding: .8em
+  overflow-y auto
+  white-space pre-wrap
+  font-size inherit
+  font-family Arial
+  width 100%
+  max-height 7.5em
+  box-sizing border-box
+  padding .8em
   &:focus
-    outline: none
+    outline none
   &:empty
-    overflow-x: hidden
+    overflow-x hidden
     &::before
-      cursor: text
-      white-space: nowrap
-      content: attr(placeholder)
-      color: LightSlateGray
+      cursor text
+      white-space nowrap
+      content attr(placeholder)
+      color lightslategray
     ~ #character-counter, + #send-message
-      visibility: hidden
-      opacity: 0
+      visibility hidden
+      opacity 0
     + #send-message
-      position: absolute
-      right: 0
-      scale: .8
+      position absolute
+      right 0
+      scale .8
 
 #character-counter
-  position: absolute
-  top: -2.2em
-  left: .2em
-  font-family: monospace
-  color: v-bind("counterChar > 50 ? 'MediumSeaGreen' : counterChar > 0 ? 'Orange' : counterChar == 0 ? 'OrangeRed' : 'Red'")
-  background: black
-  padding: .25em .5em
-  border: thin solid
-  border-radius: 4px
-  margin: 0
-  transition-duration: .15s
+  position absolute
+  top -2.2em
+  left .2em
+  font-family monospace
+  color v-bind("counterChar > 50 ? 'MediumSeaGreen' : counterChar > 0 ? 'Orange' : counterChar == 0 ? 'OrangeRed' : 'Red'")
+  background black
+  padding .25em .5em
+  border thin solid
+  border-radius 4px
+  margin 0
+  transition-duration .15s
 
 #send-message
-  font-size: 1em
-  background: transparent
-  padding: .5em
-  border: none
-  border-radius: 50%
-  $mx: .5em
-  margin: 0 $mx .3em $mx
-  transition-duration: .15s
+  font-size 1em
+  background transparent
+  padding .5em
+  border none
+  border-radius 50%
+  $mx = .5em
+  margin 0 $mx .3em $mx
+  transition-duration .15s
   &:enabled
-    color: MediumAquaMarine
-    cursor: pointer
+    color mediumaquamarine
+    cursor pointer
     &:hover
       background: rgb(20, 30, 40)
     &:focus
-      color: HoneyDew
-      background: rgb(30, 100, 100)
-      outline: none
+      color honeydew
+      background rgb(30, 100, 100)
+      outline none
   &:disabled
-    color: LightSlateGray
+    color lightslategray
 
 
-$breakpoint: 717px
+$breakpoint = 717px
 
 
-@media (max-width: $breakpoint)
+@media (max-width $breakpoint)
   #wrapper
-    flex-direction: column
+    flex-direction column
   
   #show-room-info
     &:checked + #header
-      position: fixed
-      z-index: 1
-      inset: 0
-      overflow: auto
-      background-color: rgb(15, 25, 35)
-      $px: .6em
-      padding: .6em $px 2em $px
-      animation: show-info-frames ease-out .2s
+      position fixed
+      z-index 1
+      inset 0
+      overflow auto
+      background rgb(15, 25, 35) linear-gradient(rgb(10, 25, 35), rgb(10, 20, 25))
+      $px = .6em
+      padding .6em $px 2em $px
+      animation show-info-frames ease-out .2s
       @keyframes show-info-frames
         from
-          opacity: 0
-          translate: 100%
+          opacity 0
+          translate 100%
       > #go-home-button
-        display: none
+        display none
       > #title-box
-        display: contents
+        display contents
         > #toggle-info
-          display: inline-flex
-          font-size: 1.5em
-          color: SlateGray
-          padding: .35em .4em
-          border-radius: 50%
+          display inline-flex
+          font-size 1.5em
+          color slategray
+          padding .35em .4em
+          border-radius 50%
         > #room-name
-          text-align: center
-          margin-top: .75em
+          text-align center
+          margin-top .75em
       + main
-        visibility: hidden
+        visibility hidden
     &:not(:checked) + #header
-      display: flex
-      align-items: center
-      position: sticky
-      font-size: clamp(.85em, 2.35vw, 1em)
-      background-color: rgb(20, 30, 40)
-      border-bottom: thin solid rgb(30, 50, 50)
-      animation: header-frames ease-out .2s
+      display flex
+      align-items center
+      position sticky
+      font-size clamp(.85em, 2.35vw, 1em)
+      background rgb(20, 30, 40)
+      border-bottom thin solid rgb(30, 50, 50)
+      animation header-frames ease-out .2s
       @keyframes header-frames
         from
-          opacity: 0
-          translate: -100%
+          opacity 0
+          translate -100%
       > #go-home-button
-        margin-left: .3em
+        margin-left .3em
       > #share-room-button
-        margin-right: .4em
+        margin-right .4em
       > #title-box
-        flex: 1
-        order: 2
-        position: relative
-        overflow: hidden
-        $py: .75em
-        padding: $py 0 $py .5em
+        flex 1
+        order 2
+        position relative
+        overflow hidden
+        $py = .75em
+        padding $py 0 $py .5em
         > #room-name
-          overflow: hidden   
-          pointer-events: none
-          white-space: nowrap
-          text-overflow: ellipsis
+          overflow hidden   
+          pointer-events none
+          white-space nowrap
+          text-overflow ellipsis
         > #toggle-info
-          position: absolute
-          inset: 0
+          position absolute
+          inset 0
           > *
-            display: none
+            display none
       > #users
-        display: none
+        display none
   
   #toggle-info
-    cursor: pointer
-    transition: background .2s
+    cursor pointer
+    transition background .2s
     &:hover
-      background: rgb(25, 35, 45)
+      background rgb(25, 35, 45)
     &:active
-      background: rgb(30, 40, 50)
+      background rgb(30, 40, 50)
 
 
-@media (min-width: $breakpoint + 1)
+@media (min-width $breakpoint + 1)
   #header
-    overflow: auto
-    background-color: rgb(15, 25, 35)
-    width: 40%
-    max-width: 40em
-    $px: .6em
-    padding: .6em $px 2em $px
-    border-right: thin solid rgb(25, 50, 50)
+    overflow auto
+    background rgb(15, 25, 35) linear-gradient(rgb(10, 25, 35), rgb(10, 20, 25))
+    width 40%
+    max-width 40em
+    $px = .6em
+    padding .6em $px 2em $px
+    border-right thin solid rgb(25, 50, 50)
   
   #toggle-info
-    display: none
+    display none
   
   #room-name
-    text-align: center
-    margin-top: .75em
+    text-align center
+    margin-top .75em
   
   #type-box
-    width: 100%
-    max-width: max(75%, 100em)
-    margin-right: auto
-    margin-left: auto
+    width 100%
+    max-width @css { max(75%, 100em) }
+    margin-right auto
+    margin-left auto
 </style>

@@ -19,5 +19,9 @@
   "license": "GPL-3.0",
   "dependencies": {
     "concurrently": "^7.5.0"
+  },
+  "devDependencies": {
+    "@types/dompurify": "^2.4.0",
+    "vite-plugin-pwa": "^0.13.3"
   }
 }

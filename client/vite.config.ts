@@ -1,6 +1,7 @@
+import { fileURLToPath, URL } from "node:url"
 import { defineConfig, loadEnv } from "vite"
+
 import vue from "@vitejs/plugin-vue"
-import tsconfigPaths from "vite-tsconfig-paths"
 import { VitePWA } from "vite-plugin-pwa"
 
 
@@ -11,7 +12,6 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       vue(),
-      tsconfigPaths(),
       VitePWA({
         includeAssets: ["favicon.ico", "icon.png", "icon.svg"],
         manifest: {
@@ -47,6 +47,12 @@ export default defineConfig(({ mode }) => {
           ws: true
         }
       },
+    },
+    resolve: {
+      alias: {
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+        "@global": fileURLToPath(new URL("./../global", import.meta.url))
+      }
     },
     build: {
       outDir: "../dist/public"

@@ -16,7 +16,7 @@ function shareRoom() {
 </template>
 
 
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 button
   font-size: 1.25em
   padding: .5em

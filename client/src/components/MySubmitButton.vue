@@ -13,7 +13,7 @@ defineProps<{
 </template>
 
 
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 .submit-button
   display: block
   user-select: none

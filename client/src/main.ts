@@ -1,4 +1,5 @@
-import { createApp } from "vue"
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
 import App from "@/App.vue"
 import router from "@/router"
@@ -32,6 +33,7 @@ import {
   faShareFromSquare,
   faPaperPlane
 } from "@fortawesome/free-solid-svg-icons"
+
 import {
   faGitAlt,
   faHtml5
@@ -67,7 +69,9 @@ library.add(
   faPaperPlane
 )
 
+
 createApp(App)
   .use(router)
+  .use(createPinia())
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("body")

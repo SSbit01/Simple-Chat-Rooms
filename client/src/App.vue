@@ -16,21 +16,20 @@ if (import.meta.env.MODE != "noSocket") {
 </template>
 
 
-<style lang="sass">
-html
-  height: 100%
+<style lang="stylus">
+html, body
+  height 100%
 
 body
-  display: flex
-  flex-direction: column
-  background-color: rgb(10, 15, 25)
-  height: 100%
-  color: SpringGreen
-  font-family: Lucida Sans Unicode, Arial
-  margin: 0
+  position absolute  // PREVENTS MARGIN COLLAPSING
+  inset 0
+  background rgb(10, 15, 25) linear-gradient(45deg, rgb(5, 10, 15), rgb(15, 20, 30)) no-repeat fixed
+  color springgreen
+  font-family "Lucida Sans Unicode", Arial, sans-serif
+  margin 0
 
 .router-enter-active, .router-leave-active
-  transition-duration: .15s
+  transition-duration .15s
 .router-enter-from, .router-leave-to
-  opacity: 0
+  opacity 0
 </style>

@@ -1,20 +1,21 @@
 <script lang="ts" setup>
 import { useRoute } from "vue-router"
 
-import { roomName, nickname, showForm } from "@/store"
+import useRoomStore from "@/stores/room"
 
 import ChatRoom from "@/views/ChatRoom.vue"
 import RoomForm from "@/views/RoomForm.vue"
 
 
-const route = useRoute()
+const route = useRoute(),
+      roomStore = useRoomStore()
 
 
 if (Array.isArray(route.params.roomName)) {
   route.params.roomName = route.params.roomName[0]
 }
 
-roomName.value = route.params.roomName.trim()
+roomStore.name = route.params.roomName.trim()
 
 
 if (Array.isArray(route.query.name)) {
@@ -22,10 +23,10 @@ if (Array.isArray(route.query.name)) {
 }
 
 if (route.query.name) {
-  nickname.value = route.query.name.trim()
+  roomStore.nick = route.query.name.trim()
 }
 
-showForm.value = true
+roomStore.showForm = true
 
 
 /*
@@ -43,7 +44,7 @@ if (route.query.name && route.query.name.length > 24) {
 
 <template>
   <Transition name="router" mode="out-in">
-    <RoomForm v-if="showForm" />
+    <RoomForm v-if="roomStore.showForm" />
     <ChatRoom v-else />
   </Transition>
 </template>

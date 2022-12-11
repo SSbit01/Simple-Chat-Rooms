@@ -2,7 +2,7 @@
 import { ref, computed, watch } from "vue"
 import { useRouter } from "vue-router"
 
-import { roomName } from "@/store"
+import useRoomStore from "@/stores/room"
 import socket from "@/socket"
 
 import { roomNameAttributes, roomSizeLimit } from "@global/roomAttributes"
@@ -10,9 +10,11 @@ import { roomNameAttributes, roomSizeLimit } from "@global/roomAttributes"
 import MySubmitButton from "@/components/MySubmitButton.vue"
 
 
-const router = useRouter(),
+const roomStore = useRoomStore(),
       //
-      roomNameTrimmed = computed(() => roomName.value.trim()),
+      router = useRouter(),
+      //
+      roomNameTrimmed = computed(() => roomStore.name.trim()),
       //
       isLoading = ref(false),
       roomExists = ref(false),
@@ -52,27 +54,27 @@ function roomNameOnInput(event: Event) {
     el.value = ""
   }
 
-  roomName.value = el.value
+  roomStore.name = el.value
 }
 
 
 function nextStepRoom() {
-  roomName.value = roomNameTrimmed.value
+  roomStore.name = roomNameTrimmed.value
 
   if (isValidRoomName.value) {
     if (import.meta.env.MODE == "noSocket") {
-      router.push("/room/" + roomName.value)
+      router.push("/room/" + roomStore.name)
     } else {
       isLoading.value = true
 
-      socket.emit("roomAvailability", roomName.value, res => {
+      socket.emit("roomAvailability", roomStore.name, res => {
         if ("error" in res) {
           alert(res.error)
         } else {
           roomExists.value = res.exists
           roomJoinable.value = res.exists ? res.joinable : true
           if (roomJoinable.value) {
-            router.push("/room/" + roomName.value)
+            router.push("/room/" + roomStore.name)
           }
         }
         isLoading.value = false
@@ -105,7 +107,7 @@ function nextStepRoom() {
         <div id="form-room-name-box">
           <label for="room-name-input">
             <font-awesome-icon v-if="isLoading" icon="fa-solid fa-cog" spin />
-            <font-awesome-icon v-else-if="roomName && !isValidRoomName" icon="fa-solid fa-exclamation" beatFade />
+            <font-awesome-icon v-else-if="roomStore.name && !isValidRoomName" icon="fa-solid fa-exclamation" beatFade />
             <font-awesome-icon v-else-if="!roomExists" icon="fa-solid fa-bolt" fade />
             <font-awesome-icon v-else-if="roomJoinable" icon="fa-solid fa-crosshairs" beatFade />
             <font-awesome-icon v-else icon="fa-solid fa-xmark" beatFade />
@@ -117,13 +119,13 @@ function nextStepRoom() {
             id="room-name-input"
             :pattern="roomNameAttributes.pattern.source"
             :maxlength="roomNameAttributes.maxLength"
-            :value="roomName"
+            :value="roomStore.name"
             @input="roomNameOnInput"
           />
           <p id="input-message">
             {{
               isLoading ? "Loading..."
-              : roomName && !isValidRoomName ? "Invalid Path"
+              : roomStore.name && !isValidRoomName ? "Invalid Path"
               : !roomExists ? "Available"
               : roomJoinable ? "Existing"
               : "Not Joinable"
@@ -138,106 +140,100 @@ function nextStepRoom() {
 
 
 
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 a
-  color: DodgerBlue
-  text-decoration: none
-  transition: color .2s
+  color dodgerblue
+  text-decoration none
+  transition color .2s
   &:hover
-    color: DeepSkyBlue
+    color deepskyblue
   &:focus
-    color: LightSkyBlue
+    color lightskyblue
 
 #wrapper
-  $px: .5em
-  padding: 0 $px 4em $px
+  $px = .5em
+  padding 0 $px 4em $px
 
 #title
-  text-align: center
-  color: MediumSpringGreen
-  font-size: clamp(1.5em, 9vw, 3em)
-  font-style: italic
-  font-variant: small-caps
-  text-decoration: underline double
-  text-decoration-color: LightSeaGreen
+  text-align center
+  color mediumspringgreen
+  font-size clamp(1.5em, 9vw, 3em)
+  font-style italic
+  font-variant small-caps
+  text-decoration underline double lightseagreen
   > svg
-    color: AquaMarine
+    color aquamarine
 
 main
-  display: grid
-  gap: 1.5em
+  display grid
+  gap 1.5em
 
 #intro
-  display: grid
-  $padding: .8em
-  gap: $padding
-  color: CornflowerBlue
-  background-color: rgb(5, 10, 20)
-  padding: $padding $padding $padding 2em
-  border-radius: 6px
-  box-shadow: 0 0 4px LightSeaGreen
-  margin: auto
+  display grid
+  $padding = .8em
+  gap $padding
+  color cornflowerblue
+  background-color rgb(5, 10, 20)
+  padding $padding $padding $padding 2em
+  border-radius 6px
+  box-shadow 0 0 4px lightseagreen
+  margin auto
   > li
     > code
-      color: rgb(100, 175, 255)
-      font-size: 1.1em
+      color rgb(100, 175, 255)
+      font-size 1.1em
     > .fa-li
-      color: DeepSkyBlue
+      color deepskyblue
   .fa-right-long
-    color: CadetBlue
-    margin: 0 .5em
+    color cadetblue
+    margin 0 .5em
 
 #form-room-name-box
-  display: flex
-  position: relative
-  font-size: clamp(1.25em, 7vw, 1.5em)
-  max-width: 20em
-  color: v-bind("roomName && !isValidRoomName ? 'rgb(255, 50, 100)' : roomExists && (roomJoinable ? 'orange' : 'rgb(255, 50, 100)')")
-  $radius: 8px
-  border-radius: $radius
-  box-shadow: 0 0 3px
-  margin: 1em auto
-  transition: color .15s, box-shadow .2s
+  display flex
+  position relative
+  font-size clamp(1.25em, 7vw, 1.5em)
+  max-width 20em
+  color v-bind("roomStore.name && !isValidRoomName ? 'rgb(255, 50, 100)' : roomExists && (roomJoinable ? 'orange' : 'rgb(255, 50, 100)')")
+  border-radius 8px
+  box-shadow 0 0 3px
+  margin 1em auto
+  overflow hidden
+  transition color .15s, box-shadow .2s
   &:focus-within
-    box-shadow: 0 0 8px
+    box-shadow 0 0 8px
   > label:first-of-type
-    user-select: none
-    background: rgb(15, 25, 30)
-    text-align: center
-    width: 1em
-    padding: .4em .3em
-    border-right: thin solid rgb(30, 40, 50)
-    border-radius: $radius 0 0 $radius
-  > input:last-of-type
-    border-radius: 0 $radius $radius 0
+    user-select none
+    background rgb(15, 25, 30)
+    text-align center
+    width 1em
+    padding .4em .3em
+    border-right thin solid rgb(30, 40, 50)
 
 #room-name-input
-  flex: 1
-  font-size: inherit
-  background: transparent
-  color: inherit
-  background-color: rgb(5, 10, 20)
-  font-size: 85%
-  padding-left: .4em
-  border: none
+  flex 1
+  font-size inherit
+  background transparent
+  color inherit
+  background-color rgb(5, 10, 20)
+  font-size 85%
+  padding-left .4em
+  border none
   &:focus
-    outline: none
+    outline none
   &:placeholder-shown + #input-message
-    opacity: 0
-    visibility: hidden
+    opacity 0
+    visibility hidden
 
 #input-message
-  position: absolute
-  top: -1.6em
-  right: 1em
-  font-size: .6em
-  background-color: rgb(5, 10, 20)
-  padding: 0 .4em
-  border: thin solid
-  border-bottom: none
-  $br: 4px
-  border-radius: $br $br 0 0
-  margin: 0
-  transition-property: opacity, visibility
-  transition-duration: .15s
+  position absolute
+  top -1.6em
+  right 1em
+  font-size .6em
+  background-color rgb(5, 10, 20)
+  padding 0 .4em
+  border thin solid
+  border-bottom none
+  margin 0
+  transition-property opacity, visibility
+  transition-duration .15s
 </style>

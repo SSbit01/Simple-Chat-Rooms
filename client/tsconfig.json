@@ -2,9 +2,8 @@
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
-    "allowJs": true,  // vite-tsconfig-paths doesn't work if it's not enabled
     "baseUrl": ".",
-    "paths": {
+    "paths": {  // IMPORTANT TO DEFINE IN vite.config.js
       "@/*": ["src/*"],
       "@global/*": ["../global/*"]
     }

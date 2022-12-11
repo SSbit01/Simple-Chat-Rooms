@@ -5,7 +5,7 @@
 </template>
 
 
-<style lang="sass" scoped>
+<style lang="stylus" scoped>
 a
   display: inline-flex
   color: SlateGray
