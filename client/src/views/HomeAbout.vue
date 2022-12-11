@@ -194,10 +194,8 @@ main
   font-size clamp(1.25em, 7vw, 1.5em)
   max-width 20em
   color v-bind("roomStore.name && !isValidRoomName ? 'rgb(255, 50, 100)' : roomExists && (roomJoinable ? 'orange' : 'rgb(255, 50, 100)')")
-  border-radius 8px
   box-shadow 0 0 3px
   margin 1em auto
-  overflow hidden
   transition color .15s, box-shadow .2s
   &:focus-within
     box-shadow 0 0 8px

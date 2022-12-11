@@ -182,11 +182,9 @@ function joinRoom() {
   width 100%
   font-size clamp(1.25em, 7vw, 1.5em)
   color v-bind("(!isJoinable || (!isLoading && roomStore.nick && !nicknameAvailable)) && 'rgb(255, 50, 100)'")
-  border-radius 8px
   box-shadow 0 0 3px
   margin-top .5em
   margin-bottom .2em
-  overflow hidden
   transition color .15s, box-shadow .2s
   &:focus-within
     box-shadow 0 0 8px
