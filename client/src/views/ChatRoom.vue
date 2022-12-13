@@ -292,7 +292,7 @@ main
   display grid
   font-family Arial, sans-serif
   box-sizing border-box
-  $px = @css { max(min(calc((100% - 100em) / 2), 13.5%), .6em) }
+  $px = @css { max(min(calc((100% - 100em) / 2), 13.5%), .5em) }
   padding 0 $px 3em $px
   > article
     white-space pre-wrap
