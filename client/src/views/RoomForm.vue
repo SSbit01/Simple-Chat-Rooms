@@ -95,29 +95,31 @@ function joinRoom() {
     </header>
 
     <form id="form-name" @submit.prevent="joinRoom">
-      <h2 id="nickname">
+      <h2 id="form-header">
         <font-awesome-icon icon="fa-solid fa-pen-to-square" bounce />Nickname
       </h2>
-      <div id="form-box-name">
-        <label for="room-name-input">
-          <font-awesome-icon v-if="isLoading" icon="fa-solid fa-cog" spin />
-          <font-awesome-icon v-else-if="isJoinable && (!roomStore.nick || nicknameAvailable)" icon="fa-solid fa-user" />
-          <font-awesome-icon v-else icon="fa-solid fa-xmark" beatFade />
-        </label>
-        <input
-          type="text"
-          size="10"
-          placeholder="e.g. Superman"
-          id="room-name-input"
-          :maxlength="nicknameAttributes.maxLength"
-          :value="roomStore.nick"
-          @input="nicknameOnInput"
-        />
-        <p id="input-message">
+      <div id="nickname-container">
+        <div id="nickname-box">
+          <label for="nickname-input">
+            <font-awesome-icon v-if="isLoading" icon="fa-solid fa-cog" spin />
+            <font-awesome-icon v-else-if="isJoinable && (!roomStore.nick || nicknameAvailable)" icon="fa-solid fa-user" />
+            <font-awesome-icon v-else icon="fa-solid fa-xmark" beatFade />
+          </label>
+          <input
+            type="text"
+            size="10"
+            placeholder="e.g. Superman"
+            id="nickname-input"
+            :maxlength="nicknameAttributes.maxLength"
+            :value="roomStore.nick"
+            @input="nicknameOnInput"
+          />
+        </div>
+        <p v-show="roomStore.nick" id="nickname-input-message">
           {{
             isLoading ? "Loading..."
             : !isJoinable ? "Not Joinable"
-            : (!roomStore.nick || nicknameAvailable) ? "Available"
+            : nicknameAvailable ? "Available"
             : "Not Available"
           }}
         </p>
@@ -166,7 +168,7 @@ function joinRoom() {
   box-shadow 0 0 2px mediumseagreen
   margin auto
 
-#nickname
+#form-header
   display flex
   align-items center
   gap .4em
@@ -176,15 +178,19 @@ function joinRoom() {
   > svg
     color steelblue
 
-#form-box-name
-  display flex
+#nickname-container
   position relative
-  width 100%
   font-size clamp(1.25em, 7vw, 1.5em)
-  color v-bind("(!isJoinable || (!isLoading && roomStore.nick && !nicknameAvailable)) && 'rgb(255, 50, 100)'")
-  box-shadow 0 0 2px
+  width 100%
   margin-top .5em
   margin-bottom .2em
+
+#nickname-box
+  display flex
+  color v-bind("(!isJoinable || (!isLoading && roomStore.nick && !nicknameAvailable)) && 'rgb(255, 50, 100)'")
+  border-radius 8px
+  box-shadow 0 0 2px
+  overflow hidden
   transition color .15s, box-shadow .2s
   &:focus-within
     box-shadow 0 0 6px
@@ -196,7 +202,7 @@ function joinRoom() {
     padding .4em .3em
     border-right thin solid rgb(30, 40, 50)
 
-#room-name-input
+#nickname-input
   flex 1
   font-size inherit
   background transparent
@@ -211,11 +217,11 @@ function joinRoom() {
     opacity v-bind("isJoinable && 0")
     visibility v-bind("isJoinable && 'hidden'")
 
-#input-message
+#nickname-input-message
   position absolute
-  top -1.5em
-  right 1em
-  font-size .5em
+  top -1rem
+  right 1rem
+  font-size .6em
   background-color rgb(5, 10, 20)
   padding 0 .4em
   box-shadow 0 -2px 2px

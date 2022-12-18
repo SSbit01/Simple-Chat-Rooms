@@ -209,7 +209,7 @@ io.on("connection", socket => {
   socket.on("disconnecting", () => {
     const [, ...rooms] = socket.rooms
 
-    if (socket.data.nickname) {
+    if (rooms.length && socket.data.nickname) {
       socket.to(rooms).emit("userLeaves", socket.data.nickname)
     }
   })

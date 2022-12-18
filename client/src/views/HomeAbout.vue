@@ -99,33 +99,35 @@ function nextStepRoom() {
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-user-secret" /></span>This is a platform created by <a href="https://github.com/SSbit01" target="_blank" id="creator-link">SSbit01</a> where users can create and join chat rooms without the need to create an account</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-comment-slash" /></span>Messages and events aren't stored</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-users" /></span>A room can have up to <strong>{{ roomSizeLimit }}</strong> members</li>
-        <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-window-maximize" /></span>Room path structure<font-awesome-icon icon="fa-solid fa-right-long" fade /><code>/room/{roomName}?name={nickname}</code></li>
+        <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-window-maximize" /></span>Room path structure: <code>/room/{roomName}?name={nickname}</code></li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-brands fa-html5" /></span><em>HTML</em> code is parsed in messages</li>
         <li><a href="https://github.com/SSbit01/Simple-Chat-Rooms.git" target="_blank"><span class="fa-li"><font-awesome-icon icon="fa-brands fa-git-alt" /></span>Repository</a></li>
       </ul>
       <form @submit.prevent="nextStepRoom">
-        <div id="form-room-name-box">
-          <label for="room-name-input">
-            <font-awesome-icon v-if="isLoading" icon="fa-solid fa-cog" spin />
-            <font-awesome-icon v-else-if="roomStore.name && !isValidRoomName" icon="fa-solid fa-exclamation" beatFade />
-            <font-awesome-icon v-else-if="!roomExists" icon="fa-solid fa-bolt" fade />
-            <font-awesome-icon v-else-if="roomJoinable" icon="fa-solid fa-crosshairs" beatFade />
-            <font-awesome-icon v-else icon="fa-solid fa-xmark" beatFade />
-          </label>
-          <input
-            type="text"
-            placeholder="Room Name"
-            title="Enter a valid path"
-            id="room-name-input"
-            :pattern="roomNameAttributes.pattern.source"
-            :maxlength="roomNameAttributes.maxLength"
-            :value="roomStore.name"
-            @input="roomNameOnInput"
-          />
-          <p id="input-message">
+        <div id="room-name-container">
+          <div id="room-name-box">
+            <label for="room-name-input">
+              <font-awesome-icon v-if="isLoading" icon="fa-solid fa-cog" spin />
+              <font-awesome-icon v-else-if="roomStore.name && !isValidRoomName" icon="fa-solid fa-exclamation" beatFade />
+              <font-awesome-icon v-else-if="!roomExists" icon="fa-solid fa-bolt" fade />
+              <font-awesome-icon v-else-if="roomJoinable" icon="fa-solid fa-crosshairs" beatFade />
+              <font-awesome-icon v-else icon="fa-solid fa-xmark" beatFade />
+            </label>
+            <input
+              type="text"
+              placeholder="Room Name"
+              title="Enter a valid path"
+              id="room-name-input"
+              :pattern="roomNameAttributes.pattern.source"
+              :maxlength="roomNameAttributes.maxLength"
+              :value="roomStore.name"
+              @input="roomNameOnInput"
+            />
+          </div>
+          <p v-show="roomStore.name" id="room-name-input-message">
             {{
               isLoading ? "Loading..."
-              : roomStore.name && !isValidRoomName ? "Invalid Path"
+              : !isValidRoomName ? "Invalid Path"
               : !roomExists ? "Available"
               : roomJoinable ? "Existing"
               : "Not Joinable"
@@ -170,13 +172,13 @@ main
 
 #intro
   display grid
-  $padding = .8em
-  gap $padding
+  gap .8em
+  text-align justify
   color cornflowerblue
-  background-color rgb(5, 10, 20)
-  padding $padding $padding $padding 2em
+  padding-top .8em
+  padding-right .8em
+  padding-left 2em
   border-radius 6px
-  box-shadow 0 0 4px lightseagreen
   margin auto
   > li
     > code
@@ -184,21 +186,22 @@ main
       font-size 1.1em
     > .fa-li
       color deepskyblue
-  .fa-right-long
-    color cadetblue
-    margin 0 .5em
 
-#form-room-name-box
-  display flex
+#room-name-container
   position relative
   font-size clamp(1.25em, 7vw, 1.5em)
   max-width 20em
-  color v-bind("roomStore.name && !isValidRoomName ? 'rgb(255, 50, 100)' : roomExists && (roomJoinable ? 'orange' : 'rgb(255, 50, 100)')")
-  box-shadow 0 0 2px
   margin 1em auto
+
+#room-name-box
+  display flex
+  color v-bind("roomStore.name && !isValidRoomName ? 'rgb(255, 50, 100)' : roomExists && (roomJoinable ? 'orange' : 'rgb(255, 50, 100)')")
+  border-radius 8px
+  box-shadow 0 0 3px
+  overflow hidden
   transition color .15s, box-shadow .2s
   &:focus-within
-    box-shadow 0 0 6px
+    box-shadow 0 0 8px
   > label:first-of-type
     user-select none
     background rgb(15, 25, 30)
@@ -218,14 +221,11 @@ main
   border none
   &:focus
     outline none
-  &:placeholder-shown + #input-message
-    opacity 0
-    visibility hidden
 
-#input-message
+#room-name-input-message
   position absolute
-  top -1.5em
-  right 1em
+  top -1rem
+  right 1rem
   font-size .6em
   background-color rgb(5, 10, 20)
   padding 0 .4em
@@ -235,4 +235,11 @@ main
   margin 0
   transition-property opacity, visibility
   transition-duration .15s
+
+
+@media(min-width 535px)
+  #intro
+    background-color rgb(5, 10, 20)
+    padding-bottom .8em
+    box-shadow 0 0 4px lightseagreen
 </style>
