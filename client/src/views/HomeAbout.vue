@@ -189,13 +189,13 @@ main
 
 #room-name-container
   position relative
+  color v-bind("roomStore.name && !isValidRoomName ? 'rgb(255, 50, 100)' : roomExists && (roomJoinable ? 'orange' : 'rgb(255, 50, 100)')")
   font-size clamp(1.25em, 7vw, 1.5em)
   max-width 20em
   margin 1em auto
 
 #room-name-box
   display flex
-  color v-bind("roomStore.name && !isValidRoomName ? 'rgb(255, 50, 100)' : roomExists && (roomJoinable ? 'orange' : 'rgb(255, 50, 100)')")
   border-radius 8px
   box-shadow 0 0 3px
   overflow hidden

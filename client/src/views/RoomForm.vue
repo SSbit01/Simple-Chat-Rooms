@@ -180,6 +180,7 @@ function joinRoom() {
 
 #nickname-container
   position relative
+  color v-bind("(!isJoinable || (!isLoading && roomStore.nick && !nicknameAvailable)) && 'rgb(255, 50, 100)'")
   font-size clamp(1.25em, 7vw, 1.5em)
   width 100%
   margin-top .5em
@@ -187,7 +188,6 @@ function joinRoom() {
 
 #nickname-box
   display flex
-  color v-bind("(!isJoinable || (!isLoading && roomStore.nick && !nicknameAvailable)) && 'rgb(255, 50, 100)'")
   border-radius 8px
   box-shadow 0 0 2px
   overflow hidden
