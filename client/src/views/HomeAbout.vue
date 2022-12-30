@@ -96,7 +96,7 @@ function nextStepRoom() {
 
     <main>
       <ul class="fa-ul" id="intro">
-        <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-user-secret" /></span>This is a platform created by <a href="https://github.com/SSbit01" target="_blank" id="creator-link">SSbit01</a> where users can create and join chat rooms without the need to create an account</li>
+        <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-user-secret" /></span>This is a platform created by <a href="https://github.com/SSbit01" target="_blank" id="creator-link">SSbit01</a> where users can create and join chat rooms without creating an account</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-comment-slash" /></span>Messages and events aren't stored</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-users" /></span>A room can have up to <strong>{{ roomSizeLimit }}</strong> members</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-window-maximize" /></span>Room path structure: <code>/room/{roomName}?name={nickname}</code></li>
@@ -172,7 +172,7 @@ main
 
 #intro
   display grid
-  gap .8em
+  gap 1em
   text-align justify
   color cornflowerblue
   padding-top .8em
