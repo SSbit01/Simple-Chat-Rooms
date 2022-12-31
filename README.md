@@ -1,6 +1,6 @@
 # Simple Chat Rooms
 
-This is a platform created by [SSbit01](https://github.com/SSbit01) where users can create and join chat rooms without the need to create an account. It makes use of [WebSockets](https://datatracker.ietf.org/doc/html/rfc6455).
+This is a platform created by [SSbit01](https://ssbit01.github.io/) where users can create and join chat rooms without creating an account. It makes use of [WebSockets](https://datatracker.ietf.org/doc/html/rfc6455).
 
 ---
 
