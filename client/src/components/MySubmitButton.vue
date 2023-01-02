@@ -17,7 +17,7 @@ defineProps<{
 .submit-button
   display: block
   user-select: none
-  font-size: clamp(1.1em, 4.8vw, 1.25em)
+  font-size: clamp(1.1em, 6vw, 1.25em)
   font-variant: small-caps
   border: none
   padding: .4em .8em

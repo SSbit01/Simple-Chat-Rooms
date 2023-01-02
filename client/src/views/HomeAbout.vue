@@ -153,13 +153,13 @@ a
     color lightskyblue
 
 #wrapper
-  $px = .5em
+  $px = 1em
   padding 0 $px 4em $px
 
 #title
   text-align center
   color mediumspringgreen
-  font-size clamp(1.5em, 9vw, 3em)
+  font-size clamp(1.5em, 8.5vw, 3em)
   font-style italic
   font-variant small-caps
   text-decoration underline double lightseagreen
@@ -172,12 +172,10 @@ main
 
 #intro
   display grid
-  gap 1em
-  text-align justify
+  gap 1.25em
   color cornflowerblue
-  padding-top .8em
-  padding-right .8em
-  padding-left 2em
+  padding-top .5em
+  padding-left 1.5em
   border-radius 6px
   margin auto
   > li
@@ -240,6 +238,7 @@ main
 @media(min-width 535px)
   #intro
     background-color rgb(5, 10, 20)
-    padding-bottom .8em
+    $py = 1em
+    padding $py 1em $py 2em
     box-shadow 0 0 4px lightseagreen
 </style>

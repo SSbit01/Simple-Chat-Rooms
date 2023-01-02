@@ -290,7 +290,7 @@ main
   scroll-behavior smooth
   -webkit-overflow-scrolling touch
   display grid
-  font-family Arial, sans-serif
+  font-family sans-serif
   box-sizing border-box
   $px = @css { max(min(calc((100% - 100em) / 2), 13.5%), .5em) }
   padding 0 $px 2.3em $px
@@ -358,7 +358,7 @@ main
   overflow-y auto
   white-space pre-wrap
   font-size inherit
-  font-family Arial
+  font-family sans-serif
   width 100%
   max-height 7.5em
   box-sizing border-box
@@ -450,7 +450,7 @@ $breakpoint = 717px
           text-align center
           margin-top .75em
       + main
-        visibility hidden
+        display none
     &:not(:checked) + #header
       display flex
       align-items center

@@ -134,7 +134,7 @@ function joinRoom() {
 <style lang="stylus" scoped>
 #wrapper
   text-align center
-  $px = .6em
+  $px = 1em
   padding .6em $px 4em $px
 
 #header-buttons
@@ -150,6 +150,7 @@ function joinRoom() {
   flex-wrap wrap
   justify-content center
   gap .2em .3em
+  font-size clamp(1.75em, 6.75vw, 2em)
   line-height 1.2
   overflow-wrap anywhere
   margin-bottom 1em
@@ -232,7 +233,7 @@ function joinRoom() {
   transition-duration .15s
 
 
-@media (max-width 400px)
+@media (max-width 470px)
   #form-name
     background inherit
     padding 0
