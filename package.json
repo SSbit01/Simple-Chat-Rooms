@@ -1,6 +1,5 @@
 {
   "name": "simple-chat-rooms",
-  "description": "It's a platform where users can create and join chat rooms without the need to create an account",
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
     "build": "concurrently \"npm run build --prefix server\" \"npm run build --prefix client\"",
