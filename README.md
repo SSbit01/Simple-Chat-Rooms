@@ -19,6 +19,8 @@ Also, there is a `/global` folder that can be accessed on both the *front-end* a
 
 A `README.md` file can be found in the `/client` and `/server` paths, with more information about each project.
 
+You can check out all *WebSocket* events in `/global/socketScheme.ts`.
+
 ---
 
 Once local packages for each project are installed, you can run the following *npm scripts* in the root (`/`):
