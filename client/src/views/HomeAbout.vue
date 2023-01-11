@@ -90,17 +90,17 @@ function nextStepRoom() {
   <div id="wrapper">
     <header>
       <h1 id="title">
-        Simple Chat Rooms<font-awesome-icon icon="fa-solid fa-comment-dots" transform="right-8" bounce/>
+        SimpleChatRooms<font-awesome-icon icon="fa-solid fa-comment-dots" transform="right-8" bounce/>
       </h1>
     </header>
 
     <main>
-      <ul class="fa-ul" id="intro">
+      <ul class="fa-ul" id="list-about">
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-user-secret" /></span>This is a platform created by <a href="https://ssbit01.github.io/" target="_blank" id="creator-link">SSbit01</a> where users can create and join chat rooms without creating an account</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-comment-slash" /></span>Messages and events aren't stored</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-users" /></span>A room can have up to <strong>{{ roomSizeLimit }}</strong> members</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-window-maximize" /></span>Room path structure: <code>/room/{roomName}?name={nickname}</code></li>
-        <li><span class="fa-li"><font-awesome-icon icon="fa-brands fa-html5" /></span><em>HTML</em> code is parsed in messages</li>
+        <li><span class="fa-li"><font-awesome-icon icon="fa-brands fa-html5" /></span><em><strong>HTML</strong></em> code is parsed in messages</li>
         <li><a href="https://github.com/SSbit01/Simple-Chat-Rooms.git" target="_blank"><span class="fa-li"><font-awesome-icon icon="fa-brands fa-git-alt" /></span>Repository</a></li>
       </ul>
       <form @submit.prevent="nextStepRoom">
@@ -159,7 +159,7 @@ a
 #title
   text-align center
   color mediumspringgreen
-  font-size clamp(1.5em, 8.5vw, 3em)
+  font-size clamp(1.5em, 8vw, 3em)
   font-style italic
   font-variant small-caps
   text-decoration underline double lightseagreen
@@ -170,9 +170,10 @@ main
   display grid
   gap 1.5em
 
-#intro
+#list-about
   display grid
   gap 1.25em
+  line-height 1.25
   color cornflowerblue
   padding-top .5em
   padding-left 1.5em
@@ -181,14 +182,13 @@ main
   > li
     > code
       color rgb(100, 175, 255)
-      font-size 1.1em
     > .fa-li
       color deepskyblue
 
 #room-name-container
   position relative
   color v-bind("roomStore.name && !isValidRoomName ? 'rgb(255, 50, 100)' : roomExists && (roomJoinable ? 'orange' : 'rgb(255, 50, 100)')")
-  font-size clamp(1.25em, 7vw, 1.5em)
+  font-size clamp(1.2em, 7vw, 1.5em)
   max-width 20em
   margin 1em auto
 
@@ -236,7 +236,7 @@ main
 
 
 @media(min-width 535px)
-  #intro
+  #list-about
     background-color rgb(5, 10, 20)
     $py = 1em
     padding $py 1em $py 2em

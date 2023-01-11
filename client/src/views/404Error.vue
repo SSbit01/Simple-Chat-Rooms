@@ -51,7 +51,6 @@
   color darkturquoise
   background rgb(15, 25, 40)
   font-size 1.5em
-  font-variant small-caps
   font-weight bold
   line-height 1
   text-decoration none
