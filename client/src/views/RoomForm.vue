@@ -166,7 +166,7 @@ function joinRoom() {
   max-width 26em
   padding 1em
   border-radius 12px
-  box-shadow 0 0 2px mediumseagreen
+  box-shadow 0 0 3px mediumseagreen
   margin auto
 
 #form-header
@@ -190,11 +190,11 @@ function joinRoom() {
 #nickname-box
   display flex
   border-radius 8px
-  box-shadow 0 0 2px
+  box-shadow 0 0 3px
   overflow hidden
   transition color .15s, box-shadow .2s
   &:focus-within
-    box-shadow 0 0 6px
+    box-shadow 0 0 8px
   > label:first-child
     user-select none
     background rgb(15, 25, 30)
