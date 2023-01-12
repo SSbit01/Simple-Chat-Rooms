@@ -107,7 +107,6 @@ function joinRoom() {
           </label>
           <input
             type="text"
-            size="10"
             placeholder="e.g. Superman"
             id="nickname-input"
             :maxlength="nicknameAttributes.maxLength"
@@ -205,6 +204,7 @@ function joinRoom() {
 
 #nickname-input
   flex 1
+  width 100%
   font-size inherit
   background transparent
   color inherit

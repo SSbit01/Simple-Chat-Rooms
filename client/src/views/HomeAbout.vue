@@ -210,6 +210,7 @@ main
 
 #room-name-input
   flex 1
+  width 100%
   font-size inherit
   background transparent
   color inherit
