@@ -121,7 +121,6 @@ function nextStepRoom() {
               placeholder="Room Name"
               title="Enter a valid path"
               id="room-name-input"
-              :pattern="roomNameAttributes.pattern.source"
               :maxlength="roomNameAttributes.maxLength"
               :value="roomStore.name"
               @input="roomNameOnInput"
