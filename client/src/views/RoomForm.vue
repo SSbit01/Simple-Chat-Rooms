@@ -150,6 +150,7 @@ function joinRoom() {
   justify-content space-between
   max-width 60em
   gap 1em
+  padding 1em
   margin auto
 
 #title
@@ -159,7 +160,10 @@ function joinRoom() {
   gap .2em .3em
   font-size clamp(1.75em, 6.75vw, 2em)
   line-height 1.2
+  text-align center
   overflow-wrap anywhere
+  padding 0 1rem
+  margin-top .25em
   margin-bottom 1.25em
   > svg
     color mediumaquamarine
