@@ -144,10 +144,16 @@ onUnmounted(() => {
 
 <template>
   <div id="wrapper">
-    <input type="checkbox" id="show-room-info" /> 
+
+    
+    <input type="checkbox" id="show-room-info" />
+
+
     <header id="header">
+
       <GoBackButton id="go-home-button" />
       <ShareButton title="Share Room URL" id="share-room-button" />
+
       <div id="title-box">
         <label for="show-room-info" id="toggle-info">
           <font-awesome-icon icon="fa-solid fa-arrow-left" />
@@ -156,6 +162,7 @@ onUnmounted(() => {
           <font-awesome-icon icon="fa-solid fa-bolt" fade /> {{ roomStore.name }}
         </h1>
       </div>
+
       <section id="users">
         <p><em>{{ mates.size + 1 }}</em> {{ mates.size ? "participants" : "participant" }}</p>
         <ul class="fa-ul">
@@ -169,8 +176,12 @@ onUnmounted(() => {
           </TransitionGroup>
         </ul>
       </section>
+
     </header>
+
+
     <main>
+
       <TransitionGroup name="event" tag="section" id="events">
         <article v-for="{ by, value, date }, i in events" :key="i" :class="{
           event: !by,
@@ -188,6 +199,7 @@ onUnmounted(() => {
           </div>
         </article>
       </TransitionGroup>
+
       <section id="type-box">
         <div
           placeholder="Type a message..."
@@ -205,7 +217,10 @@ onUnmounted(() => {
           {{ counterChar }}
         </p>
       </section>
+
     </main>
+
+
   </div>
 </template>
 
@@ -292,7 +307,7 @@ main
   display grid
   font-family sans-serif
   box-sizing border-box
-  $px = @css { max(min(calc((100% - 100em) / 2), 13.5%), .5em) }
+  $px = @css { max(min(calc((100% - 75em) / 2), 13.5%), .7em) }
   padding 0 $px 2.3em $px
   > article
     white-space pre-wrap
@@ -347,8 +362,12 @@ main
   position relative
   color aliceblue
   background-color rgb(0, 10, 20)
+  width 100%
+  max-width @css { max(75%, 75em) }
   caret-color lightseagreen
   box-shadow 0 0 4px darkslategray
+  margin-right auto
+  margin-left auto
   margin-top auto
   transition box-shadow .15s
   &:focus-within
@@ -387,7 +406,7 @@ main
   font-family monospace
   color v-bind("counterChar > 50 ? 'MediumSeaGreen' : counterChar > 0 ? 'Orange' : counterChar == 0 ? 'OrangeRed' : 'Red'")
   background black
-  padding .25em .5em
+  padding .2em .4em
   border thin solid
   border-radius 4px
   margin 0
@@ -512,10 +531,4 @@ $breakpoint = 717px
   #room-name
     text-align center
     margin-top .75em
-  
-  #type-box
-    width 100%
-    max-width @css { max(75%, 100em) }
-    margin-right auto
-    margin-left auto
 </style>

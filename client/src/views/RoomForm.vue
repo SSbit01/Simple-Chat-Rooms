@@ -83,21 +83,29 @@ function joinRoom() {
 
 
 <template>
-  <div id="wrapper">
+  <main>
+
+
     <header>
+
       <div id="header-buttons">
         <GoBackButton />
         <ShareButton />
       </div>
+
       <h1 id="title" title="Room Name">
         <font-awesome-icon icon="fa-solid fa-bolt" fade />{{ roomStore.name }}
       </h1>
+
     </header>
 
+
     <form id="form-name" @submit.prevent="joinRoom">
+
       <h2 id="form-header">
         <font-awesome-icon icon="fa-solid fa-pen-to-square" bounce />Nickname
       </h2>
+
       <div id="nickname-container">
         <div id="nickname-box">
           <label for="nickname-input">
@@ -114,6 +122,7 @@ function joinRoom() {
             @input="nicknameOnInput"
           />
         </div>
+
         <p v-show="roomStore.nick" id="nickname-input-message">
           {{
             isLoading ? "Loading..."
@@ -123,19 +132,18 @@ function joinRoom() {
           }}
         </p>
       </div>
+
       <MySubmitButton :valid="isJoinable && (isLoading || !roomStore.nick || nicknameAvailable)" :disabled="isLoading || !roomStore.nick">Join <font-awesome-icon icon="fa-solid fa-right-to-bracket" /></MySubmitButton>
+
     </form>
-  </div>
+
+
+  </main>
 </template>
 
 
 
 <style lang="stylus" scoped>
-#wrapper
-  text-align center
-  $px = 1em
-  padding .6em $px 4em $px
-
 #header-buttons
   display flex
   align-items center
@@ -152,7 +160,7 @@ function joinRoom() {
   font-size clamp(1.75em, 6.75vw, 2em)
   line-height 1.2
   overflow-wrap anywhere
-  margin-bottom 1em
+  margin-bottom 1.25em
   > svg
     color mediumaquamarine
 
@@ -163,8 +171,7 @@ function joinRoom() {
   gap 1em
   background rgb(0, 5, 15)
   max-width 26em
-  padding 1em
-  border-radius 12px
+  padding 1.5em 1em
   box-shadow 0 0 3px mediumseagreen
   margin auto
 
@@ -183,7 +190,7 @@ function joinRoom() {
   color v-bind("(!isJoinable || (!isLoading && roomStore.nick && !nicknameAvailable)) && 'rgb(255, 50, 100)'")
   font-size clamp(1.25em, 7vw, 1.5em)
   width 100%
-  margin-top .5em
+  margin-top 1rem
   margin-bottom .2em
 
 #nickname-box
@@ -231,11 +238,4 @@ function joinRoom() {
   margin 0
   transition-property opacity, visibility
   transition-duration .15s
-
-
-@media (max-width 470px)
-  #form-name
-    background inherit
-    padding 0
-    box-shadow none
 </style>

@@ -1,24 +1,34 @@
 <template>
-  <div>
-    <header id="main-header">
+  <main>
+
+    <hgroup id="header-group">
+
       <h1>
         <font-awesome-icon icon="fa-solid fa-4" />
         <font-awesome-icon icon="fa-solid fa-0" />
         <font-awesome-icon icon="fa-solid fa-4" />
       </h1>
-      <h2>
-        Not Found<font-awesome-icon icon="fa-solid fa-face-sad-cry" id="sad-icon" fade />
-      </h2>
-    </header>
+
+      <h2>Not Found<font-awesome-icon icon="fa-solid fa-face-sad-cry" id="sad-icon" fade /></h2>
+
+    </hgroup>
+
+
     <RouterLink to="/" id="return-home">
       <font-awesome-icon icon="fa-solid fa-house" />Return Home
     </RouterLink>
-  </div>
+
+
+  </main>
 </template>
 
 
+
 <style lang="stylus" scoped>
-#main-header
+main
+  padding-bottom 5rem
+
+#header-group
   display flex
   align-items center
   justify-content center
@@ -58,7 +68,7 @@
   border none
   border-radius 6px
   box-shadow 0 0 4px teal
-  margin 0 auto 5rem auto
+  margin 0 auto
   transition-property color, background
   transition-duration .15s
   &:hover
@@ -67,7 +77,7 @@
     background rgb(35, 50, 65)
 
 @media (max-width 750px)
-  #main-header
+  #header-group
     flex-direction column
     gap .5em
     > h1

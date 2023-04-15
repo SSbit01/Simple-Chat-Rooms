@@ -87,20 +87,25 @@ function nextStepRoom() {
 
 
 <template>
-  <div id="wrapper">
+  <main>
+
+
     <header>
       <h1 id="title" translate="no">SimpleChatRooms<font-awesome-icon icon="fa-solid fa-comment-dots" transform="right-8" bounce /></h1>
     </header>
 
-    <main>
+
+    <section>
+
       <ul class="fa-ul" id="list-about">
-        <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-user-secret" /></span>This is a platform created by <a href="https://ssbit01.github.io/" target="_blank" id="creator-link">SSbit01</a> where users can create and join chat rooms without creating an account</li>
+        <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-user-secret" /></span>This is a platform created by <a href="https://ssbit01.github.io/" target="_blank">SSbit01</a> where users can create and join chat rooms without creating an account</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-comment-slash" /></span>Messages and events aren't stored</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-users" /></span>A room can have up to <strong>{{ roomSizeLimit }}</strong> members</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-window-maximize" /></span>Room path structure: <code>/room/{roomName}?name={nickname}</code></li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-brands fa-html5" /></span><em><strong>HTML</strong></em> code is parsed in messages</li>
         <li><a href="https://github.com/SSbit01/Simple-Chat-Rooms.git" target="_blank"><span class="fa-li"><font-awesome-icon icon="fa-brands fa-git-alt" /></span>Repository</a></li>
       </ul>
+
       <form @submit.prevent="nextStepRoom">
         <div id="room-name-container">
           <div id="room-name-box">
@@ -134,8 +139,11 @@ function nextStepRoom() {
         </div>
         <MySubmitButton :valid="roomJoinable" :disabled="isLoading || !isValidRoomName">Next <font-awesome-icon icon="fa-solid fa-right-to-bracket" /></MySubmitButton>
       </form>
-    </main>
-  </div>
+
+    </section>
+
+
+  </main>
 </template>
 
 
@@ -144,15 +152,16 @@ function nextStepRoom() {
 a
   color dodgerblue
   text-decoration none
-  transition color .2s
+  transition color .2s, text-shadow .2s
   &:hover
     color deepskyblue
-  &:focus
+    text-decoration underline
+  &:active
     color lightskyblue
+    text-shadow 0 0 4px
 
-#wrapper
-  $px = 1em
-  padding 0 $px 4em $px
+main
+  padding-bottom 4em
 
 #title
   text-align center
@@ -161,22 +170,22 @@ a
   font-style italic
   font-variant small-caps
   text-decoration underline double lightseagreen
+  padding 0 1rem
   > svg
     color aquamarine
-
-main
-  display grid
-  gap 1.5em
 
 #list-about
   display grid
   gap 1.25em
-  line-height 1.25
+  max-width max-content
+  line-height 1.35
   color cornflowerblue
-  padding-top .5em
-  padding-left 1.5em
-  border-radius 6px
-  margin auto
+  background-color rgb(5, 10, 20)
+  $py = 1em
+  padding $py 1em $py 2.25em
+  box-shadow 0 0 4px lightseagreen
+  $mx = auto
+  margin 1.5em $mx 3em $mx
   > li
     > code
       color rgb(100, 175, 255)
@@ -188,6 +197,7 @@ main
   color v-bind("roomStore.name && !isValidRoomName ? 'rgb(255, 50, 100)' : roomExists && (roomJoinable ? 'orange' : 'rgb(255, 50, 100)')")
   font-size clamp(1.2em, 7vw, 1.5em)
   max-width 20em
+  padding 0 .5em
   margin 1em auto
 
 #room-name-box
@@ -208,7 +218,6 @@ main
 
 #room-name-input
   flex 1
-  width 100%
   font-size inherit
   background transparent
   color inherit
@@ -221,8 +230,8 @@ main
 
 #room-name-input-message
   position absolute
-  top -1rem
-  right 1rem
+  top -.8rem
+  right 1.4rem
   font-size .6em
   background-color rgb(5, 10, 20)
   padding 0 .4em
@@ -232,12 +241,4 @@ main
   margin 0
   transition-property opacity, visibility
   transition-duration .15s
-
-
-@media(min-width 535px)
-  #list-about
-    background-color rgb(5, 10, 20)
-    $py = 1em
-    padding $py 1em $py 2em
-    box-shadow 0 0 4px lightseagreen
 </style>
