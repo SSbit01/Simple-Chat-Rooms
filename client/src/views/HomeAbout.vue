@@ -89,9 +89,7 @@ function nextStepRoom() {
 <template>
   <div id="wrapper">
     <header>
-      <h1 id="title">
-        SimpleChatRooms<font-awesome-icon icon="fa-solid fa-comment-dots" transform="right-8" bounce/>
-      </h1>
+      <h1 id="title" translate="no">SimpleChatRooms<font-awesome-icon icon="fa-solid fa-comment-dots" transform="right-8" bounce /></h1>
     </header>
 
     <main>
