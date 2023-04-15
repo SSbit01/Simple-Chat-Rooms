@@ -145,7 +145,7 @@ io.on("connection", socket => {
       })
     }
 
-    const users = clients.map(({data: {nickname}}) => nickname)
+    const users = clients.map(({ data: { nickname } }) => nickname)
 
     if (users.includes(nickname)) {
       return callback({
