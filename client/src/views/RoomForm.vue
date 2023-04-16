@@ -230,7 +230,7 @@ function joinRoom() {
 
 #nickname-input-message
   position absolute
-  top -.85rem
+  top -1em
   right 1rem
   font-size .6em
   background-color rgb(5, 10, 20)

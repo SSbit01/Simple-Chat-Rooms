@@ -229,8 +229,8 @@ main
 
 #room-name-input-message
   position absolute
-  top -.85rem
-  right 1.4rem
+  top -1em
+  right 1.75rem
   font-size .6em
   background-color rgb(5, 10, 20)
   padding 0 .4em
