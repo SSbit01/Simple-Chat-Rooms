@@ -216,7 +216,6 @@ function joinRoom() {
 #nickname-input
   flex 1
   width 100%
-  font-size inherit
   background transparent
   color inherit
   background-color rgb(5, 10, 20)
