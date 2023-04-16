@@ -305,7 +305,6 @@ main
   scroll-behavior smooth
   -webkit-overflow-scrolling touch
   display grid
-  font-family sans-serif
   box-sizing border-box
   $px = @css { max(min(calc((100% - 75em) / 2), 13.5%), .7em) }
   padding 0 $px 2.3em $px
@@ -377,7 +376,6 @@ main
   overflow-y auto
   white-space pre-wrap
   font-size inherit
-  font-family sans-serif
   width 100%
   max-height 7.5em
   box-sizing border-box
