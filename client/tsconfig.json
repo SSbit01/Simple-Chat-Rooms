@@ -6,7 +6,8 @@
     "paths": {  // IMPORTANT TO DEFINE IN vite.config.js
       "@/*": ["src/*"],
       "@global/*": ["../global/*"]
-    }
+    },
+    "ignoreDeprecations": "5.0"
   },
 
   "references": [
