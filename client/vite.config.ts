@@ -13,28 +13,24 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       VitePWA({
-        includeAssets: ["favicon.ico", "icon.png", "icon.svg"],
+        includeAssets: ["fonts/*.ttf"],
         manifest: {
-          name: "Simple Chat Rooms by SSbit01",
-          short_name: "Simple Chat Rooms",
-          description: "It's a platform where users can create and join chat rooms without the need to create an account",
-          theme_color: "#0a0f19",
-          background_color: "#0a0f19",
+          name: "SCR by SSbit01",
+          short_name: "SCR",
+          description: "A platform where users can create and join chat rooms without creating an account",
+          theme_color: "#153b4e",
+          background_color: "#153b4e",
+          display: "standalone",
           icons: [
             {
-              src: "/icon.svg",
-              type: "image/svg+xml",
-              sizes: "any"
+                src: "/android-chrome-192x192.png",
+                sizes: "192x192",
+                type: "image/png"
             },
             {
-              src: "icon.png",
-              type: "image/png",
-              sizes: "256x256",
-            },
-            {
-              src: "/favicon.ico",
-              type: "image/x-icon",
-              sizes: "256x256",
+                src: "/android-chrome-512x512.png",
+                sizes: "512x512",
+                type: "image/png"
             }
           ]
         }

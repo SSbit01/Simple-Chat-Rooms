@@ -24,7 +24,7 @@ html, body
   font-family "Open Sans"
   font-style normal
   font-display swap
-  src url("/OpenSans-VariableFont_wdth,wght.ttf") format("opentype")
+  src url("/fonts/OpenSans-VariableFont_wdth,wght.ttf") format("opentype")
 
 body
   position absolute  // PREVENTS MARGIN COLLAPSING
