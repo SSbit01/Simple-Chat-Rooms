@@ -39,6 +39,7 @@ const router = createRouter({
       ]
     },
     {
+      name: "ERROR",
       path: "/:invalidPath(.*)*",
       component: Page404
     }
@@ -48,7 +49,7 @@ const router = createRouter({
 
 
 router.afterEach((to, from, error) => {
-  document.title = to.path
+  document.title = to.name ? `SCR - ${to.name?.toString()}` : to.path
 })
 
 
