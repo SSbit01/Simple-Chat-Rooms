@@ -15,6 +15,8 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         includeAssets: ["fonts/*.ttf"],
         manifest: {
+          id: "/",
+          start_url: "/",
           name: "SCR by SSbit01",
           short_name: "SCR",
           description: "A platform where users can create and join chat rooms without creating an account",
