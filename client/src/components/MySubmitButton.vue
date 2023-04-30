@@ -39,5 +39,7 @@ defineProps<{
       color: DarkTurquoise
       transition: color .15s
   &:disabled
+    color dimgray
+    background black
     cursor: not-allowed
 </style>
