@@ -37,7 +37,9 @@ const app = express(),
         serveClient: false,
       })
 
-app.use(helmet())
+app.use(helmet({
+  crossOriginResourcePolicy: false
+}))
 
 
 if (process.env.NODE_ENV == "production") {
