@@ -103,7 +103,7 @@ function nextStepRoom() {
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-users" /></span>A room can have up to <strong>{{ roomSizeLimit }}</strong> members</li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-solid fa-window-maximize" /></span>Room path structure: <code>/room/{roomName}?name={nickname}</code></li>
         <li><span class="fa-li"><font-awesome-icon icon="fa-brands fa-html5" /></span><em><strong>HTML</strong></em> code is parsed in messages</li>
-        <li><a href="https://github.com/SSbit01/Simple-Chat-Rooms.git" target="_blank"><span class="fa-li"><font-awesome-icon icon="fa-brands fa-git-alt" /></span>Repository</a></li>
+        <li><a href="https://github.com/SSbit01/Simple-Chat-Rooms" target="_blank"><span class="fa-li"><font-awesome-icon icon="fa-brands fa-github" /></span>Repository<font-awesome-icon icon="fa-solid fa-arrow-up-right-from-square" size="xs" class="external" /></a></li>
       </ul>
 
       <form @submit.prevent="nextStepRoom">
@@ -158,6 +158,9 @@ a
   &:active
     color lightskyblue
     text-shadow 0 0 4px
+
+.external
+  margin-left .75rem
 
 main
   padding-bottom 4em

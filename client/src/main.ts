@@ -17,6 +17,7 @@ import {
   faCommentSlash,
   faUsers,
   faWindowMaximize,
+  faArrowUpRightFromSquare,
   faRightLong,
   faCog,
   faExclamation,
@@ -35,7 +36,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 
 import {
-  faGitAlt,
+  faGithub,
   faHtml5
 } from "@fortawesome/free-brands-svg-icons"
 
@@ -47,11 +48,12 @@ library.add(
   faHouse,
   faCommentDots,
   faHtml5,
-  faGitAlt,
+  faGithub,
   faUserSecret,
   faCommentSlash,
   faUsers,
   faWindowMaximize,
+  faArrowUpRightFromSquare,
   faRightLong,
   faCog,
   faExclamation,
