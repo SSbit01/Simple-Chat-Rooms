@@ -1,18 +1,11 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {  // IMPORTANT TO DEFINE IN vite.config.js
-      "@/*": ["src/*"],
-      "@global/*": ["../global/*"]
-    },
-    "ignoreDeprecations": "5.0"
-  },
-
+  "files": [],
   "references": [
     {
-      "path": "./tsconfig.config.json"
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
     }
   ]
 }

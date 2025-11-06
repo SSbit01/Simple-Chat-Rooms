@@ -1,7 +1,9 @@
-import { fileURLToPath, URL } from "node:url"
-import { defineConfig, loadEnv } from "vite"
+import { fileURLToPath, URL } from 'node:url'
 
-import vue from "@vitejs/plugin-vue"
+import { defineConfig, loadEnv } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueDevTools from 'vite-plugin-vue-devtools'
+
 import { VitePWA } from "vite-plugin-pwa"
 
 
@@ -12,6 +14,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       vue(),
+      vueDevTools(),
       VitePWA({
         includeAssets: ["fonts/*.ttf"],
         manifest: {
