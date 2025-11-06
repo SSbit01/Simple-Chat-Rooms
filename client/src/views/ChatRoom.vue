@@ -51,7 +51,7 @@ watch(events, () => {
   nextTick(() => {
     const el = document.getElementById("events")
 
-    if (el && (events[events.length - 1].by === roomStore.nick || el.scrollHeight - el.clientHeight - el.scrollTop < 250)) {  // Check if the last event was caused by the user and if that's not the case only scroll down when the scroll is close to bottom
+    if (el && (events[events.length - 1]?.by === roomStore.nick || el.scrollHeight - el.clientHeight - el.scrollTop < 250)) {  // Check if the last event was caused by the user and if that's not the case only scroll down when the scroll is close to bottom
       el.scrollTop = el.scrollHeight
     }
   })

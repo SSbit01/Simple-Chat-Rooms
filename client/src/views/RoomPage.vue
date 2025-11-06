@@ -12,14 +12,14 @@ const route = useRoute(),
 
 
 if (Array.isArray(route.params.roomName)) {
-  route.params.roomName = route.params.roomName[0]
+  route.params.roomName = route.params.roomName[0] || ""
 }
 
-roomStore.name = route.params.roomName.trim()
+roomStore.name = route.params.roomName?.trim() || ""
 
 
 if (Array.isArray(route.query.name)) {
-  route.query.name = route.query.name[0]
+  route.query.name = route.query.name[0] || ""
 }
 
 if (route.query.name) {
