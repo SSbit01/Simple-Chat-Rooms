@@ -1,21 +1,19 @@
 {
   "name": "simple-chat-rooms",
-  "scripts": {
-    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
-    "build": "concurrently \"npm run build --prefix server\" \"npm run build --prefix client\"",
-    "start": "node dist/index.js"
+  "description": "A platform where users can create and join chat rooms without creating an account.",
+  "author": "Stefan Samson <ss42701@outlook.com> (https://ssbit01.github.io/)",
+  "license": "AGPL-3.0",
+  "repository": "github:SSbit01/Simple-Chat-Rooms",
+  "bugs": {
+    "url": "https://github.com/SSbit01/Simple-Chat-Rooms/issues"
   },
-  "keywords": [
-    "chat",
-    "room"
+  "workspaces": [
+    "./client",
+    "./server"
   ],
-  "author": "SSbit01",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/SSbit01/Simple-Chat-Rooms.git"
-  },
-  "license": "GPL-3.0",
-  "dependencies": {
-    "concurrently": "^8.0.1"
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "build": "npm run build --workspaces",
+    "start": "node dist/index.js"
   }
 }

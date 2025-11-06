@@ -23,7 +23,7 @@ const roomStore = useRoomStore(),
       isValidRoomName = computed(() => roomNameAttributes.pattern.test(roomNameTrimmed.value) && roomNameTrimmed.value.length <= roomNameAttributes.maxLength)
 
 
-if (import.meta.env.MODE != "noSocket") {
+if (import.meta.env.MODE != "nosocket") {
   watch(roomNameTrimmed, value => {
     if (isValidRoomName.value) {
       isLoading.value = true
@@ -62,7 +62,7 @@ function nextStepRoom() {
   roomStore.name = roomNameTrimmed.value
 
   if (isValidRoomName.value) {
-    if (import.meta.env.MODE == "noSocket") {
+    if (import.meta.env.MODE == "nosocket") {
       router.push("/room/" + roomStore.name)
     } else {
       isLoading.value = true

@@ -20,7 +20,7 @@ const roomStore = useRoomStore(),
       nicknameAvailable = ref(true)
 
 
-if (import.meta.env.MODE != "noSocket") {
+if (import.meta.env.MODE != "nosocket") {
   watch(nicknameTrimmed, value => {
     isLoading.value = true
 
@@ -60,7 +60,7 @@ function joinRoom() {
   roomStore.nick = nicknameTrimmed.value
   
   if (roomStore.nick) {
-    if (import.meta.env.MODE == "noSocket") {
+    if (import.meta.env.MODE == "nosocket") {
       roomStore.showForm = false
     } else {
       isLoading.value = true

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import socket from "@/socket"
 
-if (import.meta.env.MODE != "noSocket") {
+if (import.meta.env.MODE != "nosocket") {
   socket.connect()
 }
 </script>
