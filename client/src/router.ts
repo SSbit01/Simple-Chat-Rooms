@@ -26,7 +26,8 @@ const router = createRouter({
           path: ":roomName",
           component: RoomPage,
           beforeEnter(to) {
-            if ((Array.isArray(to.params.roomName) ? to.params.roomName[0] : to.params.roomName).trim().length > roomNameAttributes.maxLength) {
+            const roomName = Array.isArray(to.params.roomName) ? to.params.roomName[0] : to.params.roomName
+            if (roomName && roomName.trim().length > roomNameAttributes.maxLength) {
               return "/"
             }
 
@@ -48,7 +49,7 @@ const router = createRouter({
 })
 
 
-router.afterEach((to, from, error) => {
+router.afterEach(to => {
   document.title = to.name ? `SCR - ${to.name?.toString()}` : to.path
 })
 

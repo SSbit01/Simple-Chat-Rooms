@@ -4,8 +4,7 @@
   "author": "Stefan Samson <ss42701@outlook.com> (https://ssbit01.github.io/)",
   "license": "AGPL-3.0",
   "scripts": {
-    "dev": "node --experimental-strip-types --watch index.ts",
-    "start": "node --experimental-strip-types index.ts",
+    "dev": "node -r esbuild-register index.ts",
     "build": "esbuild --define:process.env.NODE_ENV=\"production\" index.ts --platform=node --bundle --minify --outfile=../dist/index.js"
   },
   "dependencies": {
@@ -17,7 +16,8 @@
   "devDependencies": {
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.0",
-    "esbuild": "^0.25.12"
+    "esbuild": "^0.25.12",
+    "esbuild-register": "^3.6.0"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.9",

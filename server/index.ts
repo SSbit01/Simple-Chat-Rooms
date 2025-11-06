@@ -42,7 +42,7 @@ app.use(helmet({
 }))
 
 
-if (process.env.NODE_ENV == "production") {
+if (process.env.NODE_ENV === "production") {
   const PUBLIC_PATH = __dirname + "/public/"
 
   app.use(express.static(PUBLIC_PATH))
