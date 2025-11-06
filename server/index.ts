@@ -35,13 +35,7 @@ app.use(
 )
 
 if (process.env.NODE_ENV === "production") {
-  const PUBLIC_PATH = __dirname + "/public/"
-
-  app.use(express.static(PUBLIC_PATH))
-
-  app.get("/*", (req, res) => {
-    res.sendFile(PUBLIC_PATH + "index.html")
-  })
+  app.use(express.static(__dirname + "/public/"))
 }
 
 io.on("connection", socket => {

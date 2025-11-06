@@ -128,9 +128,6 @@ importers:
       bufferutil:
         specifier: ^4.0.9
         version: 4.0.9
-      utf-8-validate:
-        specifier: ^6.0.5
-        version: 6.0.5
 
 packages:
 
