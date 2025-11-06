@@ -8,13 +8,11 @@ function shareRoom() {
 }
 </script>
 
-
 <template>
   <button v-if="showShare" type="button" @click="shareRoom">
     <font-awesome-icon icon="fa-solid fa-share-from-square" />
   </button>
 </template>
-
 
 <style lang="stylus" scoped>
 button

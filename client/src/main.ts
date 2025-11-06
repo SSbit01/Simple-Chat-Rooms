@@ -1,5 +1,5 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from "vue"
+import { createPinia } from "pinia"
 
 import App from "@/App.vue"
 import router from "@/router"
@@ -35,11 +35,7 @@ import {
   faPaperPlane
 } from "@fortawesome/free-solid-svg-icons"
 
-import {
-  faGithub,
-  faHtml5
-} from "@fortawesome/free-brands-svg-icons"
-
+import { faGithub, faHtml5 } from "@fortawesome/free-brands-svg-icons"
 
 library.add(
   fa4,
@@ -71,9 +67,4 @@ library.add(
   faPaperPlane
 )
 
-
-createApp(App)
-  .use(router)
-  .use(createPinia())
-  .component("font-awesome-icon", FontAwesomeIcon)
-  .mount("body")
+createApp(App).use(router).use(createPinia()).component("font-awesome-icon", FontAwesomeIcon).mount("body")

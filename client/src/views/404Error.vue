@@ -1,8 +1,6 @@
 <template>
   <main>
-
     <hgroup id="header-group">
-
       <h1>
         <font-awesome-icon icon="fa-solid fa-4" />
         <font-awesome-icon icon="fa-solid fa-0" />
@@ -10,19 +8,11 @@
       </h1>
 
       <h2>Not Found<font-awesome-icon icon="fa-solid fa-face-sad-cry" id="sad-icon" fade /></h2>
-
     </hgroup>
 
-
-    <RouterLink to="/" id="return-home">
-      <font-awesome-icon icon="fa-solid fa-house" />Return Home
-    </RouterLink>
-
-
+    <RouterLink to="/" id="return-home"> <font-awesome-icon icon="fa-solid fa-house" />Return Home </RouterLink>
   </main>
 </template>
-
-
 
 <style lang="stylus" scoped>
 main

@@ -14,16 +14,14 @@ import { messageAttributes } from "@global/roomAttributes"
 
 import type { ChatEvent } from "@global/socketScheme"
 
-
 DOMPurify.setConfig({
   FORBID_ATTR: ["style"]
 })
 
-
 const roomStore = useRoomStore(),
-      //
-      router = useRouter(),
-      mates = reactive(new Set<string>())
+  //
+  router = useRouter(),
+  mates = reactive(new Set<string>())
 
 socket.emit("joinChatRoom", roomStore.name, roomStore.nick, res => {
   if ("error" in res) {
@@ -35,28 +33,24 @@ socket.emit("joinChatRoom", roomStore.name, roomStore.nick, res => {
   }
 })
 
-
-const events = reactive<ChatEvent[]>([
-        { value: "You have <strong>joined</strong> the chat" },
-      ]),
-      //
-      messageInputEl = ref<HTMLDivElement>(),
-      message = ref(""),
-      //
-      counterChar = computed(() => messageAttributes.maxLength - message.value.length),
-      disabledMessageForm = computed(() => counterChar.value < 0 || !message.value.length)
-
+const events = reactive<ChatEvent[]>([{ value: "You have <strong>joined</strong> the chat" }]),
+  //
+  messageInputEl = ref<HTMLDivElement>(),
+  message = ref(""),
+  //
+  counterChar = computed(() => messageAttributes.maxLength - message.value.length),
+  disabledMessageForm = computed(() => counterChar.value < 0 || !message.value.length)
 
 watch(events, () => {
   nextTick(() => {
     const el = document.getElementById("events")
 
-    if (el && (events[events.length - 1]?.by === roomStore.nick || el.scrollHeight - el.clientHeight - el.scrollTop < 250)) {  // Check if the last event was caused by the user and if that's not the case only scroll down when the scroll is close to bottom
+    if (el && (events[events.length - 1]?.by === roomStore.nick || el.scrollHeight - el.clientHeight - el.scrollTop < 250)) {
+      // Check if the last event was caused by the user and if that's not the case only scroll down when the scroll is close to bottom
       el.scrollTop = el.scrollHeight
     }
   })
 })
-
 
 function messageOnInput() {
   const innerText = messageInputEl.value?.innerText.trim()
@@ -68,7 +62,6 @@ function messageOnInput() {
   }
 }
 
-
 function messageOnPaste(event: ClipboardEvent) {
   const plainText = DOMPurify.sanitize(event.clipboardData?.getData("text/plain") || "")
 
@@ -76,20 +69,21 @@ function messageOnPaste(event: ClipboardEvent) {
     event.preventDefault()
 
     // document.execCommand("insertText", false, plainText)
-    
+
     const range = getSelection()!.getRangeAt(0)
     range.deleteContents()
     range.insertNode(document.createTextNode(plainText))
     range.collapse(false)
 
-    event.target?.dispatchEvent(new InputEvent("input", {
-      bubbles: true,
-      composed: true,
-      inputType: "insertFromPaste"
-    }))
+    event.target?.dispatchEvent(
+      new InputEvent("input", {
+        bubbles: true,
+        composed: true,
+        inputType: "insertFromPaste"
+      })
+    )
   }
 }
-
 
 function sendMessage() {
   if (!disabledMessageForm.value) {
@@ -109,7 +103,6 @@ function sendMessage() {
   }
 }
 
-
 socket.on("message", event => {
   event.value = DOMPurify.sanitize(event.value.trim())
   if (event.value) {
@@ -118,14 +111,12 @@ socket.on("message", event => {
   }
 })
 
-
 socket.on("newUser", user => {
   mates.add(user)
   events.push({
     value: `<em><q><strong>${user}</strong></q></em> has <strong>joined</strong> the chat`
   })
 })
-
 
 socket.on("userLeaves", user => {
   mates.delete(user)
@@ -134,23 +125,16 @@ socket.on("userLeaves", user => {
   })
 })
 
-
 onUnmounted(() => {
   socket.emit("leaveChatRoom", roomStore.name)
 })
 </script>
 
-
-
 <template>
   <div id="wrapper">
-
-    
     <input type="checkbox" id="show-room-info" />
 
-
     <header id="header">
-
       <GoBackButton id="go-home-button" />
       <ShareButton title="Share Room URL" id="share-room-button" />
 
@@ -158,13 +142,13 @@ onUnmounted(() => {
         <label for="show-room-info" id="toggle-info">
           <font-awesome-icon icon="fa-solid fa-arrow-left" />
         </label>
-        <h1 id="room-name" title="Room Info">
-          <font-awesome-icon icon="fa-solid fa-bolt" fade /> {{ roomStore.name }}
-        </h1>
+        <h1 id="room-name" title="Room Info"> <font-awesome-icon icon="fa-solid fa-bolt" fade /> {{ roomStore.name }} </h1>
       </div>
 
       <section id="users">
-        <p><em>{{ mates.size + 1 }}</em> {{ mates.size ? "participants" : "participant" }}</p>
+        <p
+          ><em>{{ mates.size + 1 }}</em> {{ mates.size ? "participants" : "participant" }}</p
+        >
         <ul class="fa-ul">
           <li title="You">
             <span class="fa-li"><font-awesome-icon icon="fa-solid fa-user" beatFade /></span>{{ roomStore.nick }}
@@ -176,20 +160,22 @@ onUnmounted(() => {
           </TransitionGroup>
         </ul>
       </section>
-
     </header>
 
-
     <main>
-
       <TransitionGroup name="event" tag="section" id="events">
-        <article v-for="{ by, value, date }, i in events" :key="i" :class="{
-          event: !by,
-          message: by,
-          'my-message': by === roomStore.nick
-        }" :style="{
-          marginTop: by && events[i - 1]?.by == by ? '.25em' : '1em'
-        }">
+        <article
+          v-for="({ by, value, date }, i) in events"
+          :key="i"
+          :class="{
+            'event': !by,
+            'message': by,
+            'my-message': by === roomStore.nick
+          }"
+          :style="{
+            marginTop: by && events[i - 1]?.by == by ? '.25em' : '1em'
+          }"
+        >
           <h4 v-if="by && ![roomStore.nick, events[i - 1]?.by].includes(by)" :title="by">
             <font-awesome-icon icon="fa-solid fa-circle-user" />{{ by }}
           </h4>
@@ -210,21 +196,23 @@ onUnmounted(() => {
           @paste="messageOnPaste"
           @keypress.enter.exact.prevent="sendMessage"
         ></div>
-        <button type="button" id="send-message" title="Send" @click="sendMessage" @keypress="messageInputEl?.focus()" :disabled="disabledMessageForm">
+        <button
+          type="button"
+          id="send-message"
+          title="Send"
+          @click="sendMessage"
+          @keypress="messageInputEl?.focus()"
+          :disabled="disabledMessageForm"
+        >
           <font-awesome-icon icon="fa-solid fa-paper-plane" :beat="!disabledMessageForm" />
         </button>
         <p id="character-counter">
           {{ counterChar }}
         </p>
       </section>
-
     </main>
-
-
   </div>
 </template>
-
-
 
 <style lang="stylus" scoped>
 .event-move, .event-enter-active, .event-leave-active
@@ -298,7 +286,7 @@ main
           color rgb(0, 120, 120)
       &:not(:last-child)
         margin-bottom .6em
-  
+
 #events
   overflow-y auto
   overflow-x hidden
@@ -438,7 +426,7 @@ $breakpoint = 717px
 @media (max-width $breakpoint)
   #wrapper
     flex-direction column
-  
+
   #show-room-info
     &:checked + #header
       position fixed
@@ -492,7 +480,7 @@ $breakpoint = 717px
         $py = .75em
         padding $py 0 $py .5em
         > #room-name
-          overflow hidden   
+          overflow hidden
           pointer-events none
           white-space nowrap
           text-overflow ellipsis
@@ -503,7 +491,7 @@ $breakpoint = 717px
             display none
       > #users
         display none
-  
+
   #toggle-info
     cursor pointer
     transition background .2s
@@ -522,10 +510,10 @@ $breakpoint = 717px
     $px = .6em
     padding .6em $px 2em $px
     border-right thin solid rgb(25, 50, 50)
-  
+
   #toggle-info
     display none
-  
+
   #room-name
     text-align center
     margin-top .75em

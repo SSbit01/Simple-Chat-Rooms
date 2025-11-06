@@ -6,10 +6,7 @@ import Page404 from "@/views/404Error.vue"
 
 import { roomNameAttributes, nicknameAttributes } from "@global/roomAttributes"
 
-
-
 const router = createRouter({
-
   history: createWebHistory(import.meta.env.BASE_URL),
 
   routes: [
@@ -45,14 +42,10 @@ const router = createRouter({
       component: Page404
     }
   ]
-
 })
-
 
 router.afterEach(to => {
   document.title = to.name ? `SCR - ${to.name?.toString()}` : to.path
 })
-
-
 
 export default router

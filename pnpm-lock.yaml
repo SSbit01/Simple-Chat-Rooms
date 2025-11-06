@@ -121,6 +121,9 @@ importers:
       esbuild-register:
         specifier: ^3.6.0
         version: 3.6.0(esbuild@0.25.12)
+      prettier:
+        specifier: 3.6.2
+        version: 3.6.2
     optionalDependencies:
       bufferutil:
         specifier: ^4.0.9

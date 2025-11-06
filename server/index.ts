@@ -1,4 +1,4 @@
-import { config as envConfig} from "dotenv"
+import { config as envConfig } from "dotenv"
 
 import { createServer } from "http"
 
@@ -10,8 +10,6 @@ import { roomSizeLimit, roomNameAttributes, nicknameAttributes, messageAttribute
 
 import type { ServerToClientEvents, ClientToServerEvents } from "@global/socketScheme"
 
-
-
 interface InterServerEvents {
   ping(): void
 }
@@ -20,27 +18,21 @@ interface SocketData {
   nickname: string
 }
 
-
-
 envConfig({
   path: "../.env"
 })
 
 const app = express(),
-      httpServer = createServer(app),
-      io = new Server<
-        ClientToServerEvents,
-        ServerToClientEvents,
-        InterServerEvents,
-        SocketData
-      >(httpServer, {
-        serveClient: false,
-      })
+  httpServer = createServer(app),
+  io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(httpServer, {
+    serveClient: false
+  })
 
-app.use(helmet({
-  crossOriginResourcePolicy: false
-}))
-
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false
+  })
+)
 
 if (process.env.NODE_ENV === "production") {
   const PUBLIC_PATH = __dirname + "/public/"
@@ -51,8 +43,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(PUBLIC_PATH + "index.html")
   })
 }
-
-
 
 io.on("connection", socket => {
   socket.on("roomAvailability", (room, callback) => {
@@ -72,16 +62,19 @@ io.on("connection", socket => {
 
     const roomData = io.sockets.adapter.rooms.get(room)
 
-    callback(roomData ? {
-      exists: true,
-      joinable: roomData.size < roomSizeLimit
-    } : {
-      exists: false
-    })
+    callback(
+      roomData
+        ? {
+            exists: true,
+            joinable: roomData.size < roomSizeLimit
+          }
+        : {
+            exists: false
+          }
+    )
   })
 
-
-  socket.on("nicknameAvailability", async(room, nickname, callback) => {
+  socket.on("nicknameAvailability", async (room, nickname, callback) => {
     room = room.trim()
 
     if (!room) {
@@ -97,20 +90,26 @@ io.on("connection", socket => {
     }
 
     const clients = await io.in(room).fetchSockets(),
-          joinable = clients.length < roomSizeLimit
-    
+      joinable = clients.length < roomSizeLimit
+
     nickname = nickname.trim()
-    
-    callback(joinable ? {
-      joinable: true,
-      nickname: nickname.length > 0 && nickname.length <= nicknameAttributes.maxLength && !clients.some(({data}) => data.nickname == nickname)
-    } : {
-      joinable: false
-    })
+
+    callback(
+      joinable
+        ? {
+            joinable: true,
+            nickname:
+              nickname.length > 0 &&
+              nickname.length <= nicknameAttributes.maxLength &&
+              !clients.some(({ data }) => data.nickname == nickname)
+          }
+        : {
+            joinable: false
+          }
+    )
   })
 
-
-  socket.on("joinChatRoom", async(room, nickname, callback) => {
+  socket.on("joinChatRoom", async (room, nickname, callback) => {
     room = room.trim()
 
     if (!room) {
@@ -162,10 +161,9 @@ io.on("connection", socket => {
     callback({ users })
   })
 
-
   socket.on("message", (room, msg, callback) => {
     room = room.trim()
-    
+
     if (!room) {
       return callback({
         error: "Room name is required"
@@ -198,7 +196,6 @@ io.on("connection", socket => {
     })
   })
 
-
   socket.on("leaveChatRoom", room => {
     socket.leave(room)
 
@@ -206,7 +203,6 @@ io.on("connection", socket => {
       io.in(room).emit("userLeaves", socket.data.nickname)
     }
   })
-
 
   socket.on("disconnecting", () => {
     const [, ...rooms] = socket.rooms
@@ -216,8 +212,6 @@ io.on("connection", socket => {
     }
   })
 })
-
-
 
 const PORT = process.env.SERVER_PORT || 3000
 

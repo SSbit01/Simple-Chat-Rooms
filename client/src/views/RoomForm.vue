@@ -10,39 +10,40 @@ import GoBackButton from "@/components/GoHomeButton.vue"
 import ShareButton from "@/components/ShareLinkButton.vue"
 import MySubmitButton from "@/components/MySubmitButton.vue"
 
-
 const roomStore = useRoomStore(),
-      //
-      nicknameTrimmed = computed(() => roomStore.nick.trim()),
-      //
-      isLoading = ref(false),
-      isJoinable = ref(true),
-      nicknameAvailable = ref(true)
-
+  //
+  nicknameTrimmed = computed(() => roomStore.nick.trim()),
+  //
+  isLoading = ref(false),
+  isJoinable = ref(true),
+  nicknameAvailable = ref(true)
 
 if (import.meta.env.MODE != "nosocket") {
-  watch(nicknameTrimmed, value => {
-    isLoading.value = true
+  watch(
+    nicknameTrimmed,
+    value => {
+      isLoading.value = true
 
-    socket.emit("nicknameAvailability", roomStore.name, value, res => {
-      if ("error" in res) {
-        alert(res.error)
-        isLoading.value = false
-      } else {
-        isJoinable.value = res.joinable
-        if (value == nicknameTrimmed.value) {
+      socket.emit("nicknameAvailability", roomStore.name, value, res => {
+        if ("error" in res) {
+          alert(res.error)
           isLoading.value = false
-          if (res.joinable) {
-            nicknameAvailable.value = res.nickname
+        } else {
+          isJoinable.value = res.joinable
+          if (value == nicknameTrimmed.value) {
+            isLoading.value = false
+            if (res.joinable) {
+              nicknameAvailable.value = res.nickname
+            }
           }
         }
-      }
-    })
-  }, {
-    immediate: true
-  })
+      })
+    },
+    {
+      immediate: true
+    }
+  )
 }
-
 
 function nicknameOnInput(event: Event) {
   const el = event.target as HTMLInputElement
@@ -55,10 +56,9 @@ function nicknameOnInput(event: Event) {
   roomStore.nick = el.value
 }
 
-
 function joinRoom() {
   roomStore.nick = nicknameTrimmed.value
-  
+
   if (roomStore.nick) {
     if (import.meta.env.MODE == "nosocket") {
       roomStore.showForm = false
@@ -80,31 +80,19 @@ function joinRoom() {
 }
 </script>
 
-
-
 <template>
   <main>
-
-
     <header>
-
       <div id="header-buttons">
         <GoBackButton />
         <ShareButton />
       </div>
 
-      <h1 id="title" title="Room Name">
-        <font-awesome-icon icon="fa-solid fa-bolt" fade />{{ roomStore.name }}
-      </h1>
-
+      <h1 id="title" title="Room Name"> <font-awesome-icon icon="fa-solid fa-bolt" fade />{{ roomStore.name }} </h1>
     </header>
 
-
     <form id="form-name" @submit.prevent="joinRoom">
-
-      <h2 id="form-header">
-        <font-awesome-icon icon="fa-solid fa-pen-to-square" bounce />Nickname
-      </h2>
+      <h2 id="form-header"> <font-awesome-icon icon="fa-solid fa-pen-to-square" bounce />Nickname </h2>
 
       <div id="nickname-container">
         <div id="nickname-box">
@@ -124,24 +112,16 @@ function joinRoom() {
         </div>
 
         <p v-show="roomStore.nick" id="nickname-input-message">
-          {{
-            isLoading ? "Loading..."
-            : !isJoinable ? "Not Joinable"
-            : nicknameAvailable ? "Available"
-            : "Not Available"
-          }}
+          {{ isLoading ? "Loading..." : !isJoinable ? "Not Joinable" : nicknameAvailable ? "Available" : "Not Available" }}
         </p>
       </div>
 
-      <MySubmitButton :valid="isJoinable && (isLoading || !roomStore.nick || nicknameAvailable)" :disabled="isLoading || !roomStore.nick">Join <font-awesome-icon icon="fa-solid fa-right-to-bracket" /></MySubmitButton>
-
+      <MySubmitButton :valid="isJoinable && (isLoading || !roomStore.nick || nicknameAvailable)" :disabled="isLoading || !roomStore.nick"
+        >Join <font-awesome-icon icon="fa-solid fa-right-to-bracket"
+      /></MySubmitButton>
     </form>
-
-
   </main>
 </template>
-
-
 
 <style lang="stylus" scoped>
 #header-buttons

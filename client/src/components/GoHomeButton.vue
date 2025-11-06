@@ -4,7 +4,6 @@
   </RouterLink>
 </template>
 
-
 <style lang="stylus" scoped>
 a
   display: inline-flex

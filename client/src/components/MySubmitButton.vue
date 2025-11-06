@@ -4,14 +4,12 @@ defineProps<{
 }>()
 </script>
 
-
 <template>
   <button v-if="valid" type="submit" class="submit-button">
     <slot></slot>
   </button>
   <button v-else type="submit" class="submit-button">Retry <font-awesome-icon icon="fa-solid fa-rotate-right" /></button>
 </template>
-
 
 <style lang="stylus" scoped>
 .submit-button

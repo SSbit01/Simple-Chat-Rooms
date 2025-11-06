@@ -6,7 +6,6 @@ if (import.meta.env.MODE != "nosocket") {
 }
 </script>
 
-
 <template>
   <RouterView v-slot="{ Component, route }">
     <Transition name="router" mode="out-in">
@@ -14,7 +13,6 @@ if (import.meta.env.MODE != "nosocket") {
     </Transition>
   </RouterView>
 </template>
-
 
 <style lang="stylus">
 html, body
