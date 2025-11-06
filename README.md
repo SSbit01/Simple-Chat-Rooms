@@ -1,33 +1,44 @@
-# *Simple Chat Rooms*
+# Simple Chat Rooms
 
-This is a platform created by [SSbit01](https://ssbit01.github.io/) where users can create and join chat rooms without creating an account. It uses [WebSockets](https://datatracker.ietf.org/doc/html/rfc6455) to provide real-time chat functionality.
-
----
-
-The source code consists of three [node](https://nodejs.org/) projects:
-
-1. `/client`
-: *front-end* project
-2. `/server`
-: *back-end* server
-3. `/`
-: root project, which allows to start or build the other projects at once
-
-Each of them has its **local packages**, which must be installed manually.
-
-Also, there is a `/global` folder that can be accessed on both the *front-end* and *back-end* to get some common variables and types.
-
-A `README.md` file can be found in the `/client` and `/server` paths, with more information about each project.
-
-You can check out all *WebSocket* events in `/global/socketScheme.ts`.
+A lightweight platform where users can **create and join chat rooms without an account**.  
+It leverages [Socket.IO](https://socket.io/) to provide real-time chat functionality.
 
 ---
 
-Once local packages for each project are installed, you can run the following *npm scripts* in the root (`/`):
+## 📂 Project Structure
 
-- `dev`
-: starts the *front-end* and *back-end* projects in development mode.
-- `build`
-: compiles and bundles the *front-end* and *back-end* projects, a new folder `/dist` is created.
-- `start`
-: starts the production build (*front-end* and *back-end* must be built).
+The source code is organized into three [Node.js](https://nodejs.org/) projects:
+
+1. **`/client`** → Front-end project  
+2. **`/server`** → Back-end server  
+3. **`/` (root)** → Allows starting or building both projects at once  
+
+Each project has its own **local packages**, which must be installed manually.
+
+Additionally, there is a **`/global`** folder shared between the front-end and back-end, containing common variables and types.
+
+- Each project (`/client` and `/server`) includes its own `README.md` with more details.  
+- All Socket.IO events are defined in **`/global/socketScheme.ts`**.
+
+---
+
+## ⚙️ Available Scripts
+
+After installing local packages for each project, you can run the following **npm scripts** from the root (`/`):
+
+- **`dev:client`** → Starts the front-end server in development mode  
+- **`dev:server`** → Starts the back-end server in development mode  
+- **`dev`** → Starts both front-end and back-end servers in development mode  
+- **`build`** → Compiles and bundles both projects, creating a new `/dist` folder  
+- **`start`** → Runs the production build (requires prior build of front-end and back-end)
+
+---
+
+## License
+
+```txt
+Copyright © 2022 Stefan Samson <ss42701@outlook.com> (https://ssbit01.github.io/)
+
+This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+See the LICENSE file for the full license text.
+```

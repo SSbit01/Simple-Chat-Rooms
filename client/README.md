@@ -1,6 +1,6 @@
 # *Front-End* (Client)
 
-This template should help get you started developing with Vue 3 in Vite.
+Created by [SSbit01](https://ssbit01.github.io) with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
