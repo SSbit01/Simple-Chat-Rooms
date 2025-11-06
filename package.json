@@ -12,8 +12,13 @@
     "./server"
   ],
   "scripts": {
-    "dev": "npm run dev --workspaces",
-    "build": "npm run build --workspaces",
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "dev": "run-p dev:client dev:server",
+    "build": "npm run build-only --workspaces",
     "start": "node dist/index.js"
+  },
+  "devDependencies": {
+    "npm-run-all2": "^8.0.4"
   }
 }

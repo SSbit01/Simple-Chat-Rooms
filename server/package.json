@@ -5,7 +5,7 @@
   "license": "AGPL-3.0",
   "scripts": {
     "dev": "node -r esbuild-register index.ts",
-    "build": "esbuild --define:process.env.NODE_ENV=\"production\" index.ts --platform=node --bundle --minify --outfile=../dist/index.js"
+    "build-only": "esbuild --define:process.env.NODE_ENV=\"production\" index.ts --platform=node --bundle --minify --outfile=../dist/index.js"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
