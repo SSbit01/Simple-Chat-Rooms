@@ -24,13 +24,13 @@ main
   justify-content center
   gap 2rem
   text-align center
-  font-size clamp(1.5em, 8.8vw, 2em)
+  font-size 1.75em
   margin 5rem 0
   > h1, > h2
       margin-top 0
       margin-bottom 0
   > h1
-    font-size 4em
+    font-size 3em
     line-height 1
     border-right thin solid teal
     padding-right 2.5rem
@@ -73,4 +73,5 @@ main
     > h1
       border-right none
       padding-right 0
+      margin-bottom .25em
 </style>

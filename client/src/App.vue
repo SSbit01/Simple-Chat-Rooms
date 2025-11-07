@@ -31,6 +31,7 @@ body
   color springgreen
   font-family "Open Sans", Arial, sans-serif
   margin 0
+  -webkit-tap-highlight-color transparent  // Remove tap highlight in webkit based browsers
 
 .router-enter-active, .router-leave-active
   transition-duration .15s
