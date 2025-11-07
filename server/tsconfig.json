@@ -9,7 +9,6 @@
     // Bundler mode
     "moduleResolution": "nodenext",
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
     "noEmit": true,
 
     // Best practices

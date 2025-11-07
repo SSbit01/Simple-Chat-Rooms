@@ -1,6 +1,7 @@
 import { config as envConfig } from "dotenv"
 
 import { createServer } from "http"
+import * as path from "path"
 
 import express from "express"
 import { Server } from "socket.io"
@@ -37,7 +38,7 @@ app.use(
 )
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("public"))
+  app.use(express.static(path.join(__dirname, "public")))
 }
 
 io.on("connection", socket => {
