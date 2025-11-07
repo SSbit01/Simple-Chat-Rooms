@@ -6,9 +6,9 @@ import express from "express"
 import { Server } from "socket.io"
 import helmet from "helmet"
 
-import { roomSizeLimit, roomNameAttributes, nicknameAttributes, messageAttributes } from "@global/roomAttributes"
+import { roomSizeLimit, roomNameAttributes, nicknameAttributes, messageAttributes } from "../global/roomAttributes.ts"
 
-import type { ServerToClientEvents, ClientToServerEvents } from "@global/socketScheme"
+import type { ServerToClientEvents, ClientToServerEvents } from "../global/socketScheme.ts"
 
 interface InterServerEvents {
   ping(): void
@@ -22,11 +22,13 @@ envConfig({
   path: "../.env"
 })
 
-const app = express(),
-  httpServer = createServer(app),
-  io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(httpServer, {
-    serveClient: false
-  })
+const app = express()
+
+const httpServer = createServer(app)
+
+const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(httpServer, {
+  serveClient: false
+})
 
 app.use(
   helmet({
@@ -35,7 +37,7 @@ app.use(
 )
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(__dirname + "/public/"))
+  app.use(express.static("public"))
 }
 
 io.on("connection", socket => {

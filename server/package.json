@@ -3,6 +3,7 @@
   "version": "1.3.0",
   "author": "Stefan Samson <ss42701@outlook.com> (https://ssbit01.github.io/)",
   "license": "AGPL-3.0",
+  "main": "./index.ts",
   "scripts": {
     "dev": "node -r esbuild-register index.ts",
     "build-only": "esbuild --define:process.env.NODE_ENV=\\\"production\\\" index.ts --platform=node --bundle --minify --outfile=../dist/index.js",
