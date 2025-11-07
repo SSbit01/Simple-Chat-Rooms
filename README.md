@@ -9,11 +9,11 @@ It leverages [Socket.IO](https://socket.io/) to provide real-time chat functiona
 
 The source code is organized into three [Node.js](https://nodejs.org/) projects:
 
-1. **`/client`** → Front-end project  
-2. **`/server`** → Back-end server  
-3. **`/` (root)** → Allows starting or building both projects at once  
+1. **`/client`** → Front-end project
+2. **`/server`** → Back-end project
+3. **`/` (root)** → Allows starting or building both projects at once
 
-Each project has its own **local packages**, which must be installed manually.
+This platform is structured as a **monorepo**. To install the packages for each project, simply run your preferred package manager's installer.
 
 Additionally, there is a **`/global`** folder shared between the front-end and back-end, containing common variables and types.
 
